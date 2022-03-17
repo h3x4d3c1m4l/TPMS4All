@@ -1,0 +1,86 @@
+{
+    "home": {
+        "title": "My Vehicles",
+        "add_vehicle": {
+            "title": "Add Vehicle",
+            "name": "Name",
+            "name_placeholder": "e.g. Celina's car",
+            "name_validation_empty": "Name must not be empty",
+            "name_validation_not_unique": "Name must be unique",
+            "type": "Type",
+            "type_option_car": "Car",
+            "type_option_motorcycle": "Motorcycle",
+            "type_option_custom": "Other",
+            "add": "Add"
+        },
+        "vehicle_card": {
+            "sensors_not_configured": "One or more sensors have not been configured yet.",
+            "configure": "Configure",
+            "some_sensors_unavailable": "We are still awaiting a report from some of your sensors. Please check your sensor's battery if this message does not disappear.",
+            "all_sensors_unavailable": "None of your sensors seem to be in proximity at the moment, please check again later.",
+            "select_sensor": "Pair sensor",
+            "finding_sensor": "Finding sensor ...",
+            "auto_find_sensor": "Auto find sensor instead",
+            "select_manually_instead": "Select manually instead"
+        },
+        "configure_sensor": {
+            "title": "Configure sensor",
+            "please_wait": "Please wait while we look for your sensor ...",
+            "no_results": "No sensors found",
+            "try_again": "Try again"
+        },
+        "edit_mode": {
+            "added_on": "Added on: ",
+            "edit_name": "Edit name",
+            "delete": "Delete"
+        },
+        "delete_vehicle": {
+            "title": "Delete vehicle",
+            "content": "Are you sure to delete vehicle '{}'?"
+        },
+        "rename_vehicle": {
+            "title": "Rename vehicle",
+            "content": "New name for vehicle '{}':"
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "settings": {
+            "language": {
+                "title": "Language",
+                "subtitle": "App display language",
+                "options": {
+                    "default": "Default",
+                    "english": "English",
+                    "dutch": "Dutch"
+                }
+            },
+            "tire_pressure_unit": {
+                "title": "Tire pressure unit",
+                "subtitle": "psi, bar, kPa, ..."
+            },
+            "temperature_unit": {
+                "title": "Temperature unit",
+                "subtitle": "°C, °F, ..."
+            },
+            "theme": {
+                "title": "App theme",
+                "subtitle": "Change app colors",
+                "options": {
+                    "default": "Default",
+                    "light": "Light",
+                    "dark": "Dark"
+                }
+            }
+        },
+        "changes_will_be_saved_automatically": "Changes will be saved automatically"
+    },
+    "about": {
+        "title": "About this app"
+    },
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "rename": "Rename",
+    "delete": "Delete"
+}

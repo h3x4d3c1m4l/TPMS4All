@@ -1,0 +1,87 @@
+{
+    "hello_world": "Hallo Wereld!",
+    "home": {
+        "title": "Mijn Voertuigen",
+        "add_vehicle": {
+            "title": "Voeg voertuig toe",
+            "name": "Naam",
+            "name_placeholder": "bijv. Celina's car",
+            "name_validation_empty": "Naam mag niet leeg zijn",
+            "name_validation_not_unique": "Naam is al in gebruik",
+            "type": "Type",
+            "type_option_car": "Auto",
+            "type_option_motorcycle": "Motorfiets",
+            "type_option_custom": "Anders",
+            "add": "Voeg toe"
+        },
+        "vehicle_card": {
+            "sensors_not_configured": "Eén of meer sensors zijn nog niet ingesteld.",
+            "configure": "Configureer",
+            "some_sensors_unavailable": "We wachten nog op data van eén of meer sensors. Controleer de batterij(en) indien dit zich niet oplost.",
+            "all_sensors_unavailable": "Alle sensors lijken buiten bereik. Controleer later opnieuw.",
+            "select_sensor": "Koppel sensor",
+            "finding_sensor": "Sensor zoeken ...",
+            "auto_find_sensor": "Zoek sensor automatisch",
+            "select_manually_instead": "Kies sensor handmatig"
+        },
+        "configure_sensor": {
+            "title": "Configureer sensor",
+            "please_wait": "Een moment geduld terwijl we de sensor zoeken ...",
+            "no_results": "Geen sensoren gevonden",
+            "try_again": "Probeer opnieuw"
+        },
+        "edit_mode": {
+            "added_on": "Toegevoegd op: ",
+            "edit_name": "Wijzig naam",
+            "delete": "Verwijder"
+        },
+        "delete_vehicle": {
+            "title": "Verwijder voertuig",
+            "content": "Zeker om voertuig '{}' te verwijderen?"
+        },
+        "rename_vehicle": {
+            "title": "Hernoem voertuig",
+            "content": "Nieuwe naam voor voertuig '{}':"
+        }
+    },
+    "settings": {
+        "title": "Instellingen",
+        "settings": {
+            "language": {
+                "title": "Taal",
+                "subtitle": "App weergavetaal",
+                "options": {
+                    "default": "Standaard",
+                    "english": "Engels",
+                    "dutch": "Nederlands"
+                }
+            },
+            "tire_pressure_unit": {
+                "title": "Bandenspannings-eenheid",
+                "subtitle": "psi, bar, kPa, ..."
+            },
+            "temperature_unit": {
+                "title": "Temperatuur-eenheid",
+                "subtitle": "°C, °F, ..."
+            },
+            "theme": {
+                "title": "App thema",
+                "subtitle": "Pas app kleuren aan",
+                "options": {
+                    "default": "Standaard",
+                    "light": "Licht",
+                    "dark": "Donker"
+                }
+            }
+        },
+        "changes_will_be_saved_automatically": "Wijzigingen worden automatisch opgeslagen"
+    },
+    "about": {
+        "title": "Over deze app"
+    },
+    "cancel": "Annuleren",
+    "yes": "Ja",
+    "no": "Nee",
+    "rename": "Hernoem",
+    "delete": "Verwijder"
+}

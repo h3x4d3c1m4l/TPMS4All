@@ -1,0 +1,60 @@
+# TPMS 4 All 🚗🏍️
+
+Bluetooth tire pressure sensor reader for Android and iOS, built using [Flutter](https://flutter.dev/).
+
+## Project goals
+
+- Support different types of TPMS sensors
+  - At the moment it supports the most common TPMS sensor that can be found on many electronics websites
+- Support multiple vehicles
+  - Any combination of cars, motorcycles, other vehicles (with 1..n amount of sensors on it)
+- Nice UI (simple to use for everyone)
+- Available for Android and iOS
+  - iOS is untested at the moment due to not having access to macOS and iOS/iPadOS
+
+## Ideas
+
+- Add support for more sensors 
+  - If you happen to have any which currently don't work, open an issue on GitHub and let me know!
+- Add MQTT support for publishing sensor values
+
+## Project stack
+
+- Framework: [Flutter](https://flutter.dev/)
+- Routing: [Routemaster](https://pub.dev/packages/routemaster)
+- UI/UX kit: [Fluent UI](https://pub.dev/packages/fluent_ui)
+- Icons: [Fluent UI System Icons](https://pub.dev/packages/fluentui_system_icons)
+- Bluetooth interfacing: [Reactive BLE](https://pub.dev/packages/flutter_reactive_ble)
+- State management: [Bloc](https://pub.dev/packages/flutter_bloc)
+- Persistence: [Isar](https://pub.dev/packages/isar)
+- Model immutability: [Freezed](https://pub.dev/packages/freezed), [Fast Immutable Collections](https://pub.dev/packages/fast_immutable_collections)
+- l10n: [Easy Localization](https://pub.dev/packages/easy_localization)
+
+## Running the project
+
+This project uses the great [`fvm`](https://fvm.app/) to ease Flutter version selection, upgrading and CI/CD (in the future). If `fvm` is available in your path:
+
+- Run `fvm install` from the project checkout directory to install the correct Flutter version
+- Simply call the correct versions of `flutter` and `dart` by prefixing any below commands with `fvm`
+- You can change the Flutter/Dark SDK versions by running `fvm use <version>` (e.g. `fvm use 2.10.4`) and restart your IDE (if applicable)
+
+Note: The project itself does not depend on fvm, it just makes my life a little easier.
+
+Make sure to run the appropriate Flutter version (please see [the fvm config file](.fvm/fvm_config.json) for the version number) by installing it manually or using fvm. After code checkout, run `flutter pub get` then `flutter pub run build_runner build` for code generation. If all steps have succeeded you can simply run the project from your favoriete IDE on an emulator or physical device.
+
+If you're testing on a emulator, 
+
+## Code quality
+
+- This project uses `flutter_lints`
+  - No warnings allowed, verify by running `flutter analyze` before committing
+- Additional guidelines:
+  - Use max line length of 120
+  - Split long pieces of code using functions or at least by comments
+    - This makes it easy to quickly 'scan' through code
+  - Make use of `// TODO` but also `// Could Have` for 'nice to have functionality'
+  - Prefer Flutter Favorite packages and packages that are still being actively maintained for the past months
+    - Doing this will make sure the app will run on newer Flutter releases with minimal fixes
+  - Only use packages that support both Android and iOS/iPadOS
+  - Keep the project up to date with the latest Flutter release and regularly run a `flutter pub outdated` to check for outdated dependencies
+    - Be sure to check changelogs for any upgraded dependencies to make sure the upgrade won't cause unwanted sideeffects

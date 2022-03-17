@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 4.771 5.0099" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<radialGradient id="b" cx="63.424" cy="273.05" r="2.649" gradientUnits="userSpaceOnUse">
+<stop stop-color="#ebf26f" offset="0"/>
+<stop stop-color="#cee19f" offset=".28231"/>
+<stop stop-color="#d3d7cf" offset=".44837"/>
+<stop stop-color="#bbc0b6" offset=".75926"/>
+<stop stop-color="#a3a99d" offset="1"/>
+</radialGradient>
+<radialGradient id="a" cx="135.05" cy="131.07" r="90.901" gradientUnits="userSpaceOnUse">
+<stop stop-color="#fff" stop-opacity=".57732" offset="0"/>
+<stop stop-color="#eeeeec" stop-opacity="0" offset="1"/>
+</radialGradient>
+<linearGradient id="c" x1="76.634" x2="65.819" y1="302.01" y2="268.07" gradientUnits="userSpaceOnUse">
+<stop stop-color="#fff" offset="0"/>
+<stop stop-color="#fff" stop-opacity="0" offset="1"/>
+</linearGradient>
+</defs>
+<g transform="translate(-56.686 -103.06)">
+<g transform="matrix(.26458 0 0 .26458 36.03 74.587)">
+<rect x="80.638" y="116.2" width="7.8202" height="1.7717" fill="#d3d7cf" stroke="#888a85" stroke-linecap="round" stroke-linejoin="round" stroke-width=".125"/>
+<rect x="89.544" y="116.2" width="3.168" height="1.7717" fill="#d3d7cf" stroke="#888a85" stroke-linecap="round" stroke-linejoin="round" stroke-width=".125"/>
+<circle transform="translate(23.226,-155.96)" cx="63.424" cy="273.05" r="2.5865" fill="url(#b)" stroke="#888a85" stroke-linecap="round" stroke-linejoin="round" stroke-width=".125"/>
+<path d="m87.539 107.67c-5.193 0-9.407 4.21-9.407 9.4 0 5.2 4.214 9.41 9.407 9.41 3.757 0 6.993-2.19 8.5-5.37v-8.04c-1.507-3.18-4.743-5.4-8.5-5.4z" fill="#c00" fill-opacity=".58824" stroke="#a40000" stroke-linecap="round" stroke-linejoin="round" stroke-width=".125"/>
+<circle transform="matrix(.094 0 0 .094 71.562 101.36)" cx="170" cy="167.36" r="90.236" fill="#c00" fill-opacity=".58824" stroke="#a40000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3298"/>
+<circle transform="matrix(.094 0 0 .094 71.562 101.36)" cx="170" cy="167.36" r="90.236" fill="url(#a)"/>
+<ellipse transform="translate(23.226,-155.96)" cx="64.488" cy="269.59" rx="7.7132" ry="4.771" fill="url(#c)"/>
+</g>
+</g>
+</svg>
