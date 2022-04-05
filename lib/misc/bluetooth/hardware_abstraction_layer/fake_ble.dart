@@ -13,7 +13,7 @@ import 'package:universal_tpms_reader/models/application/_enums.dart';
 /// This is a fake Bluetooth Low Energy implementation used for testing whenever no sensors are in range, or when
 /// debugging on an emulator.
 class FakeBle implements BluetoothHal {
-  static const Duration _interval = Duration(milliseconds: 50);
+  static const Duration _interval = Duration(seconds: 3);
   static final IList<BleDevice> _fakeDevices = IList([
     BleDevice(
       btAddress: Uint8List.fromList([0x80, 0x12, 0x34, 0x13, 0x37, 0xAA]),
