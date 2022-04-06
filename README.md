@@ -20,6 +20,7 @@ Bluetooth tire pressure sensor reader for Android and iOS, built using [Flutter]
   - This would allow to see more info on the sensor and swap and test the sensor
 - Allow creating a (non car, non motorcycle) vehicle with 'n' tires
   - Tires should be able to be named for identification purpose
+- Improve `FakeBle`, generate random sensor data values instead of static data
 
 ## Ideas
 
@@ -52,7 +53,7 @@ Note: The project itself does not depend on fvm, it just makes my life a little 
 
 Make sure to run the appropriate Flutter version (please see [the fvm config file](.fvm/fvm_config.json) for the version number) by installing it manually or using fvm. After code checkout, run `flutter pub get` then `flutter pub run build_runner build` for code generation. If all steps have succeeded you can simply run the project from your favoriete IDE on an emulator or physical device.
 
-If you're testing on a emulator, 
+If you're testing on a emulator, you might want to uncomment the line in [`bluetooth_bloc.dart`](lib/blocs/bluetooth/bluetooth_bloc.dart) that creates an instance of `ReactiveBle` and uncomment the line that creates an instance of `FakeBle`. Be sure to not commit the change. Doing this will generate fake Bluetooth TPMS sensor data for testing, as the Android emulator currently does not support emulating Bluetooth devices.
 
 ## Code quality
 
