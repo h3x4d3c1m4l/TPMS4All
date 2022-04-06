@@ -12,11 +12,21 @@ Bluetooth tire pressure sensor reader for Android and iOS, built using [Flutter]
 - Available for Android and iOS
   - iOS is untested at the moment due to not having access to macOS and iOS/iPadOS
 
+## TODOs
+
+- Find a way to detect Bluetooth version of the device
+  - Some newer model sensors use the same protocol but only transmit packets using Bluetooth 5.0, thus devices with Bluetooth 4.x can't receive their advertisements
+- Tire/Sensor detail view
+  - This would allow to see more info on the sensor and swap and test the sensor
+- Allow creating a (non car, non motorcycle) vehicle with 'n' tires
+  - Tires should be able to be named for identification purpose
+
 ## Ideas
 
 - Add support for more sensors 
   - If you happen to have any which currently don't work, open an issue on GitHub and let me know!
 - Add MQTT support for publishing sensor values
+- Share a vehicle by QR-code, NFC
 
 ## Project stack
 
