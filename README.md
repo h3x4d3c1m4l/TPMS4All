@@ -21,13 +21,17 @@ Bluetooth tire pressure sensor reader for Android and iOS, built using [Flutter]
 - Allow creating a (non car, non motorcycle) vehicle with 'n' tires
   - Tires should be able to be named for identification purpose
 - Improve `FakeBle`, generate random sensor data values instead of static data
+- Fix hamburger menu not closing after clicking on a Add Vehicle, Settings or About
+- Warn when there are permissions issues
 
 ## Ideas
 
-- Add support for more sensors 
+- Add support for more sensors
   - If you happen to have any which currently don't work, open an issue on GitHub and let me know!
 - Add MQTT support for publishing sensor values
 - Share a vehicle by QR-code, NFC
+- First start wizard (permissions, settings)
+  - Might reuse as well when permissions are removed (by user, or automatically by Android) to fix permissions
 
 ## Project stack
 
