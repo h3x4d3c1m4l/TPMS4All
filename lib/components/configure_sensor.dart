@@ -24,20 +24,24 @@ class _ConfigureSensorState extends State<ConfigureSensor> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BluetoothBloc, BluetoothState>(
-      builder: (context, state) {
-        return Form(
-          key: _formKey,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: CustomBottomSheet(
-            description: 'home.configure_sensor.title'.tr(),
-            child:
-                (state.scanState == BluetoothScanState.scanning || state.scanState == BluetoothScanState.throttling) &&
-                        state.foundSensors.isEmpty
+    return BlocBuilder<VehicleManagerBloc, VehicleManagerState>(
+      builder: (context, vehicleManagerState) {
+        return BlocBuilder<BluetoothBloc, BluetoothState>(
+          builder: (context, bluetoothState) {
+            return Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: CustomBottomSheet(
+                description: 'home.configure_sensor.title'.tr(),
+                child: (bluetoothState.scanState == BluetoothScanState.scanning ||
+                            bluetoothState.scanState == BluetoothScanState.throttling) &&
+                        bluetoothState.foundSensors.isEmpty
                     ? ScanProgressIndicator(retryScan: widget.retryScan)
                     : ListView(
                         shrinkWrap: true,
-                        children: state.foundSensors
+                        children: bluetoothState.foundSensors
+                            .where((s) => !vehicleManagerState.vehicles
+                                .any((v) => v.tires.any((t) => t.sensorSerial == s.serial)))
                             .map((s) => TappableListTile(
                                   leading: const Icon(ms.FluentIcons.bluetooth_20_regular),
                                   title: Text('${s.vendorName} ${s.productName}'),
@@ -46,7 +50,9 @@ class _ConfigureSensorState extends State<ConfigureSensor> {
                                 ))
                             .toList(),
                       ),
-          ),
+              ),
+            );
+          },
         );
       },
     );
