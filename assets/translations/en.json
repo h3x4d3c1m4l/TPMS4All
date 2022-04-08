@@ -1,4 +1,11 @@
 {
+    "welcome": {
+        "language": "Language",
+        "theme": "Theme",
+        "welcome": {
+            "title": "Welcome to {}"
+        }
+    },
     "home": {
         "title": "My Vehicles",
         "add_vehicle": {

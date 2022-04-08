@@ -8,6 +8,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:universal_tpms_reader/blocs/settings/settings_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:universal_tpms_reader/components/_all.dart';
+import 'package:universal_tpms_reader/mixins/set_language_mixin.dart';
 import 'package:universal_tpms_reader/models/application/_enums.dart';
 import 'package:universal_tpms_reader/models/application/settings.dart';
 
@@ -18,9 +19,7 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
-  late SettingsBloc settingsBloc;
-
+class _SettingsPageState extends State<SettingsPage> with SetLanguageMixin {
   @override
   void initState() {
     super.initState();
@@ -50,9 +49,9 @@ class _SettingsPageState extends State<SettingsPage> {
                         child: Combobox<String?>(
                           placeholder: Text('settings.settings.language.options.default'.tr()),
                           isExpanded: true,
-                          items: getLanguageOptions(),
+                          items: SetLanguageMixin.getLanguageOptions(),
                           value: settings.languageCode,
-                          onChanged: (String? languageCode) {
+                          onChanged: (languageCode) {
                             setAndStoreLanguage(languageCode);
                           },
                         ),
@@ -74,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           value: settings.tirePressureUnit,
                           onChanged: (tirePressureUnit) {
                             settingsBloc.add(SaveSettings(
-                              settingsBloc.state.settings.copyWith(tirePressureUnit: tirePressureUnit!),
+                              settings.copyWith(tirePressureUnit: tirePressureUnit!),
                             ));
                           },
                         ),
@@ -96,7 +95,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           value: settings.temperatureUnit,
                           onChanged: (temperatureUnit) {
                             settingsBloc.add(SaveSettings(
-                              settingsBloc.state.settings.copyWith(temperatureUnit: temperatureUnit!),
+                              settings.copyWith(temperatureUnit: temperatureUnit!),
                             ));
                           },
                         ),
@@ -118,7 +117,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           value: settings.appTheme,
                           onChanged: (appTheme) {
                             settingsBloc.add(SaveSettings(
-                              settingsBloc.state.settings.copyWith(appTheme: appTheme!),
+                              settings.copyWith(appTheme: appTheme!),
                             ));
                           },
                         ),
@@ -134,14 +133,6 @@ class _SettingsPageState extends State<SettingsPage> {
         );
       },
     );
-  }
-
-  static List<ComboboxItem<String?>> getLanguageOptions() {
-    return <ComboboxItem<String?>>[
-      ComboboxItem<String>(child: Text('settings.settings.language.options.default'.tr()), value: null),
-      ComboboxItem<String>(child: Text('settings.settings.language.options.english'.tr()), value: 'en'),
-      ComboboxItem<String>(child: Text('settings.settings.language.options.dutch'.tr()), value: 'nl'),
-    ].lock.unlockView;
   }
 
   static List<ComboboxItem<TirePressureUnit>> getTirePressureUnitOptions() {
@@ -166,34 +157,5 @@ class _SettingsPageState extends State<SettingsPage> {
       ComboboxItem<AppTheme>(child: Text('settings.settings.theme.options.light'.tr()), value: AppTheme.light),
       ComboboxItem<AppTheme>(child: Text('settings.settings.theme.options.dark'.tr()), value: AppTheme.dark),
     ].lock.unlockView;
-  }
-
-  void setAndStoreLanguage(String? languageCode) {
-    // save setting
-    settingsBloc.add(SaveSettings(
-      settingsBloc.state.settings.copyWith(languageCode: languageCode),
-    ));
-
-    // set UI
-    if (languageCode != null) {
-      // user picked an actual language option
-      context.setLocale(Locale(languageCode));
-    } else {
-      // user picked 'default' option (meaning: set to device language with fallback)
-
-      // note: we should be able to use context.resetLocale() but
-      // it force sets the locale to the first device preferred locale even if not supported
-      // by us; this will make Flutter crash :(
-
-      // check if we support any locales the user has set as preferred in their OS
-      Locale? supportedLocale = WidgetsBinding.instance!.window.locales.firstOrNullWhere((deviceLocale) =>
-          context.supportedLocales.any((supportedLocale) => supportedLocale.languageCode == deviceLocale.languageCode));
-
-      if (supportedLocale != null) {
-        context.setLocale(Locale(supportedLocale.languageCode));
-      } else {
-        context.setLocale(context.fallbackLocale!);
-      }
-    }
   }
 }

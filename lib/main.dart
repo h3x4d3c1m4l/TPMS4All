@@ -54,6 +54,11 @@ class App extends StatelessWidget {
           routesBuilder: (context) {
             return RouteMap(
               routes: {
+                '/': (routeData) => const FluentPage(child: FirstStartPage()),
+              }
+            );
+            return RouteMap(
+              routes: {
                 '/': (routeData) => const FluentPage(child: HomePage()),
                 '/settings': (routeData) => const FluentPage(child: SettingsPage()),
                 '/about': (routeData) => const FluentPage(child: AboutPage()),

@@ -8,6 +8,7 @@ export 'layout/_all.dart';
 export 'about_action.dart';
 export 'add_vehicle.dart';
 export 'configure_sensor.dart';
+export 'first_start_step.dart';
 export 'setting_card.dart';
 export 'tire_info.dart';
 export 'vehicle_card.dart';

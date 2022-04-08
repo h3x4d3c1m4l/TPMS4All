@@ -1,5 +1,11 @@
 {
-    "hello_world": "Hallo Wereld!",
+    "welcome": {
+        "language": "Taal",
+        "theme": "Thema",
+        "welcome": {
+            "title": "Welkom bij {}"
+        }
+    },
     "home": {
         "title": "Mijn Voertuigen",
         "add_vehicle": {

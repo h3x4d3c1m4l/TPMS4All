@@ -39,6 +39,7 @@ dependencies:
   routemaster: 1.0.0
   quick_blue: 0.4.1+1
   shared_preferences: 2.0.13
+  step_progress_indicator: 1.0.2
   system_theme: 2.0.0
   uuid: 3.0.6
   wakelock: 0.6.1+2
