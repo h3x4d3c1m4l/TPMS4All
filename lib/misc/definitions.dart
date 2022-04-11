@@ -9,10 +9,10 @@ Uint8List hexToUint8List(String hex) {
   if (hex.length % 2 != 0) {
     throw 'Odd number of hex digits';
   }
-  var l = hex.length ~/ 2;
-  var result = Uint8List(l);
+  final l = hex.length ~/ 2;
+  final result = Uint8List(l);
   for (var i = 0; i < l; ++i) {
-    var x = int.parse(hex.substring(i * 2, (2 * (i + 1))), radix: 16);
+    final x = int.parse(hex.substring(i * 2, 2 * (i + 1)), radix: 16);
     if (x.isNaN) {
       throw 'Expected hex string';
     }

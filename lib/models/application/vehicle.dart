@@ -11,7 +11,6 @@ part 'vehicle.freezed.dart';
 
 @freezed
 class Vehicle with _$Vehicle {
-  const Vehicle._();
   const factory Vehicle({
     required UuidValue uuid,
     required VehicleType? type,
@@ -20,6 +19,7 @@ class Vehicle with _$Vehicle {
     required Color color,
     required IList<Tire> tires,
   }) = _Vehicle;
+  const Vehicle._();
 
   // unconfigured / waiting for sensor
   bool get unconfigured => tires.any((t) => t.isUnconfigured);

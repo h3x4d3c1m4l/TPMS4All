@@ -5,9 +5,6 @@ part of 'bluetooth_bloc.dart';
 
 @freezed
 class BluetoothState with _$BluetoothState {
-  const BluetoothState._();
-  factory BluetoothState.defaultState() => BluetoothState();
-
   factory BluetoothState({
     @Default(BluetoothScanState.idle) BluetoothScanState scanState,
     DateTime? scanStart,
@@ -18,6 +15,9 @@ class BluetoothState with _$BluetoothState {
     PermissionStatus? permissionForBluetooth,
     PermissionStatus? permissionForLocation,
   }) = _BluetoothState;
+  const BluetoothState._();
+
+  factory BluetoothState.defaultState() => BluetoothState();
 
   bool get bluetoothPermissionsGranted =>
       (permissionForBluetooth == PermissionStatus.granted || permissionForBluetooth == PermissionStatus.limited) &&

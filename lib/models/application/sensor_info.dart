@@ -10,7 +10,6 @@ part 'sensor_info.freezed.dart';
 
 @freezed
 class SensorInfo with _$SensorInfo {
-  const SensorInfo._();
   const factory SensorInfo({
     required Uint8List btAddress,
     required String serial,
@@ -23,4 +22,5 @@ class SensorInfo with _$SensorInfo {
     double? batteryPercentage,
     bool? leakDetected,
   }) = _SensorInfo;
+  const SensorInfo._();
 }

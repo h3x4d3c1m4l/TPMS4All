@@ -21,11 +21,11 @@ class AppEasyLocalization extends StatelessWidget {
         return EasyLocalization(
           supportedLocales: const [Locale('en'), Locale('nl')],
           path: 'assets/translations',
-          child: child,
           saveLocale: false,
           useOnlyLangCode: true,
           fallbackLocale: const Locale('en'),
           startLocale: languageCode != null ? Locale(languageCode) : null,
+          child: child,
         );
       },
     );

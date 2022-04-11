@@ -3,23 +3,23 @@
 
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:universal_tpms_reader/blocs/_all.dart';
 import 'package:universal_tpms_reader/misc/extensions/ilist_extension.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:universal_tpms_reader/models/persistence/_all.dart';
 import 'package:uuid/uuid.dart';
 import 'package:dart_extensions/dart_extensions.dart';
 
-part 'vehicle_manager_state.dart';
-part 'vehicle_manager_event.dart';
 part 'vehicle_manager_bloc.freezed.dart';
 part 'vehicle_manager_bloc_db.dart';
+part 'vehicle_manager_event.dart';
+part 'vehicle_manager_state.dart';
 
 /// BLoC that manages both in memory storage of vehicle and tire data and also their persistence.
 /// For actual persistence Isar is being used.
@@ -77,7 +77,7 @@ class VehicleManagerBloc extends Bloc<VehicleManagerEvent, VehicleManagerState> 
   }
 
   FutureOr<void> _onUpsertSensorInfo(UpsertSensorInfo event, Emitter<VehicleManagerState> emit) async {
-    Vehicle? vehicle = state.vehicles
+    final Vehicle? vehicle = state.vehicles
         .firstOrNullWhere((v) => v.tires.any((t) => _uuidOrSensorInfoMatchesTire(t, event.tireUuid, event.sensorInfo)));
 
     // if there's no match, just ignore this sensor data

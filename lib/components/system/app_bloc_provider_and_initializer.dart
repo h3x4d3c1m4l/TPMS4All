@@ -12,14 +12,14 @@ class AppBlocProviderAndInitializer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BluetoothBloc bluetoothBloc = BluetoothBloc();
+    final BluetoothBloc bluetoothBloc = BluetoothBloc();
 
     return MultiBlocProvider(
       providers: [
         // first initialize Settings and Database
         BlocProvider<SettingsBloc>(
           create: (context) {
-            var bloc = SettingsBloc();
+            final bloc = SettingsBloc();
             bloc.add(LoadSettingsFromStorageEvent());
             return bloc;
           },
@@ -32,7 +32,7 @@ class AppBlocProviderAndInitializer extends StatelessWidget {
         ),
         BlocProvider<VehicleManagerBloc>(
           create: (context) {
-            var bloc = VehicleManagerBloc(bluetoothBloc);
+            final bloc = VehicleManagerBloc(bluetoothBloc);
             bloc.add(InitializeFromDatabaseEvent());
             return bloc;
           },

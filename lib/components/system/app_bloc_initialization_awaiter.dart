@@ -30,7 +30,7 @@ class AppBlocInitializationAwaiter extends StatelessWidget {
                         ),
                       ),
                     ),
-              transitionBuilder: (child, animation) => DrillInPageTransition(child: child, animation: animation),
+              transitionBuilder: (child, animation) => DrillInPageTransition(animation: animation, child: child),
             );
           },
         );

@@ -1,6 +1,7 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
+import 'package:dart_extensions/dart_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -9,7 +10,6 @@ import 'package:routemaster/routemaster.dart';
 import 'package:universal_tpms_reader/blocs/_all.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:uuid/uuid.dart';
-import 'package:dart_extensions/dart_extensions.dart';
 
 class AddVehicle extends StatefulWidget {
   const AddVehicle({Key? key}) : super(key: key);
@@ -70,8 +70,8 @@ class _AddVehicleState extends State<AddVehicle> {
                     // add button
                     const SizedBox(height: 20),
                     TextButton(
-                      child: Text('home.add_vehicle.add'.tr()),
                       onPressed: saveVehicle,
+                      child: Text('home.add_vehicle.add'.tr()),
                     ),
                   ],
                 ),
@@ -85,9 +85,10 @@ class _AddVehicleState extends State<AddVehicle> {
 
   static List<ComboboxItem<VehicleType>> getTirePressureUnitOptions() {
     return <ComboboxItem<VehicleType>>[
-      ComboboxItem<VehicleType>(child: Text('home.add_vehicle.type_option_car'.tr()), value: VehicleType.car),
+      ComboboxItem<VehicleType>(value: VehicleType.car, child: Text('home.add_vehicle.type_option_car'.tr())),
       ComboboxItem<VehicleType>(
-          child: Text('home.add_vehicle.type_option_motorcycle'.tr()), value: VehicleType.motorcycle),
+          value: VehicleType.motorcycle,
+          child: Text('home.add_vehicle.type_option_motorcycle'.tr())),
       //ComboboxItem<VehicleType>(child: Text('bar'), value: VehicleType.other), // TODO
     ].lock.unlockView;
   }

@@ -1,14 +1,13 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-import 'package:dart_extensions/dart_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:universal_tpms_reader/blocs/settings/settings_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:universal_tpms_reader/blocs/settings/settings_bloc.dart';
 import 'package:universal_tpms_reader/components/_all.dart';
-import 'package:universal_tpms_reader/mixins/set_language_mixin.dart';
+import 'package:universal_tpms_reader/mixins/set_language_and_theme_mixin.dart';
 import 'package:universal_tpms_reader/models/application/_enums.dart';
 import 'package:universal_tpms_reader/models/application/settings.dart';
 
@@ -19,7 +18,7 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage> with SetLanguageMixin {
+class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMixin {
   @override
   void initState() {
     super.initState();
@@ -49,10 +48,10 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageMixin {
                         child: Combobox<String?>(
                           placeholder: Text('settings.settings.language.options.default'.tr()),
                           isExpanded: true,
-                          items: SetLanguageMixin.getLanguageOptions(),
+                          items: SetLanguageAndThemeMixin.getLanguageOptions(),
                           value: settings.languageCode,
                           onChanged: (languageCode) {
-                            setAndStoreLanguage(languageCode);
+                            applyAndStoreLanguage(languageCode);
                           },
                         ),
                       ),
@@ -113,13 +112,9 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageMixin {
                         width: 100,
                         child: Combobox<AppTheme>(
                           isExpanded: true,
-                          items: getAppThemeOptions(),
+                          items: SetLanguageAndThemeMixin.getAppThemeOptions(),
                           value: settings.appTheme,
-                          onChanged: (appTheme) {
-                            settingsBloc.add(SaveSettings(
-                              settings.copyWith(appTheme: appTheme!),
-                            ));
-                          },
+                          onChanged: (appTheme) => applyAndStoreAppTheme(appTheme!),
                         ),
                       ),
                     ),
@@ -137,25 +132,17 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageMixin {
 
   static List<ComboboxItem<TirePressureUnit>> getTirePressureUnitOptions() {
     return const <ComboboxItem<TirePressureUnit>>[
-      ComboboxItem<TirePressureUnit>(child: Text('psi'), value: TirePressureUnit.psi),
-      ComboboxItem<TirePressureUnit>(child: Text('atm'), value: TirePressureUnit.atm),
-      ComboboxItem<TirePressureUnit>(child: Text('bar'), value: TirePressureUnit.bar),
-      ComboboxItem<TirePressureUnit>(child: Text('kPa'), value: TirePressureUnit.kpa),
+      ComboboxItem<TirePressureUnit>(value: TirePressureUnit.psi, child: Text('psi')),
+      ComboboxItem<TirePressureUnit>(value: TirePressureUnit.atm, child: Text('atm')),
+      ComboboxItem<TirePressureUnit>(value: TirePressureUnit.bar, child: Text('bar')),
+      ComboboxItem<TirePressureUnit>(value: TirePressureUnit.kpa, child: Text('kPa')),
     ].lock.unlockView;
   }
 
   static List<ComboboxItem<TemperatureUnit>> getTemperatureUnitOptions() {
     return const <ComboboxItem<TemperatureUnit>>[
-      ComboboxItem<TemperatureUnit>(child: Text('°C'), value: TemperatureUnit.celcius),
-      ComboboxItem<TemperatureUnit>(child: Text('°F'), value: TemperatureUnit.fahrenheit),
-    ].lock.unlockView;
-  }
-
-  static List<ComboboxItem<AppTheme>> getAppThemeOptions() {
-    return <ComboboxItem<AppTheme>>[
-      ComboboxItem<AppTheme>(child: Text('settings.settings.theme.options.default'.tr()), value: AppTheme.byDevice),
-      ComboboxItem<AppTheme>(child: Text('settings.settings.theme.options.light'.tr()), value: AppTheme.light),
-      ComboboxItem<AppTheme>(child: Text('settings.settings.theme.options.dark'.tr()), value: AppTheme.dark),
+      ComboboxItem<TemperatureUnit>(value: TemperatureUnit.celcius, child: Text('°C')),
+      ComboboxItem<TemperatureUnit>(value: TemperatureUnit.fahrenheit, child: Text('°F')),
     ].lock.unlockView;
   }
 }

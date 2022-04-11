@@ -50,8 +50,8 @@ class ScanProgressIndicator extends StatelessWidget {
               Text('home.configure_sensor.no_results'.tr()),
               const SizedBox(height: 20),
               TextButton(
-                child: Text('home.configure_sensor.try_again'.tr()),
                 onPressed: retryScan,
+                child: Text('home.configure_sensor.try_again'.tr()),
               ),
             ],
           ],

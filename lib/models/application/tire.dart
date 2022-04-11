@@ -13,7 +13,6 @@ part 'tire.freezed.dart';
 class Tire with _$Tire {
   static const Duration _availabilityTimeout = Duration(minutes: 15);
 
-  const Tire._();
   const factory Tire({
     required UuidValue uuid,
   
@@ -37,6 +36,7 @@ class Tire with _$Tire {
     double? warnAtTemperatureCelcius,
     double? criticalAtTemperatureCelcius,
   }) = _Tire;
+  const Tire._();
 
   // unconfigured / waiting for sensor
   bool get isUnconfigured => sensorSerial == null;

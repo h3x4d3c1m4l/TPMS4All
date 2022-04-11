@@ -3,10 +3,10 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:universal_tpms_reader/blocs/_all.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
 import 'package:universal_tpms_reader/components/_all.dart';
 import 'package:universal_tpms_reader/misc/definitions.dart';
 

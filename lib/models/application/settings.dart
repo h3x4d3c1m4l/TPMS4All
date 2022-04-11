@@ -8,17 +8,17 @@ part 'settings.freezed.dart';
 
 @freezed
 class Settings with _$Settings {
-  factory Settings.withDefaults() => const Settings(
-        tirePressureUnit: TirePressureUnit.bar,
-        temperatureUnit: TemperatureUnit.celcius,
-        appTheme: AppTheme.byDevice,
-      );
-
-  const Settings._();
   const factory Settings({
     String? languageCode,
     required TirePressureUnit tirePressureUnit,
     required TemperatureUnit temperatureUnit,
     required AppTheme appTheme,
   }) = _Settings;
+  const Settings._();
+
+  factory Settings.withDefaults() => const Settings(
+        tirePressureUnit: TirePressureUnit.bar,
+        temperatureUnit: TemperatureUnit.celcius,
+        appTheme: AppTheme.byDevice,
+      );
 }

@@ -18,6 +18,7 @@ class AboutAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      onPressed: onPressed,
       child: Column(
         children: [
           Icon(icon, size: 25),
@@ -25,7 +26,6 @@ class AboutAction extends StatelessWidget {
           Text(caption),
         ],
       ),
-      onPressed: onPressed,
     );
   }
 }

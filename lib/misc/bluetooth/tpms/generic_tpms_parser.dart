@@ -3,12 +3,12 @@
 
 import 'dart:typed_data';
 
+import 'package:convert/convert.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:universal_tpms_reader/misc/bluetooth/tpms/tpms_message_parser.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:universal_tpms_reader/models/application/ble_device.dart';
 import 'package:uuid/uuid.dart';
-import 'package:convert/convert.dart';
 
 // Supports TPMS that's currently supported by com.po.tyrecheck2020.new
 class GenericTpmsParser extends TpmsMessageParser {
@@ -24,7 +24,7 @@ class GenericTpmsParser extends TpmsMessageParser {
         device.vendorData[0] != 0x00 ||
         device.vendorData[1] != 0x01) return null;
 
-    ByteData byteData = device.vendorData.buffer.asByteData();
+    final ByteData byteData = device.vendorData.buffer.asByteData();
 
     return SensorInfo(
       btAddress: device.btAddress,
@@ -36,7 +36,7 @@ class GenericTpmsParser extends TpmsMessageParser {
       tirePressureKPa: byteData.getInt32(8, Endian.little).toDouble() / 1000,
       temperatureCelcius: byteData.getInt32(12, Endian.little).toDouble() / 100,
       batteryPercentage: byteData.getInt8(16).toDouble(),
-      leakDetected: byteData.getInt8(17) == 1 ? true : false,
+      leakDetected: byteData.getInt8(17) == 1,
     );
   }
 
@@ -71,7 +71,7 @@ class GenericTpmsParser extends TpmsMessageParser {
 
   static String? _getSerialFromBluetoothName(String name) {
     // e.g. TPMS2_1A2B3C
-    List<String> split = name.split('_');
+    final List<String> split = name.split('_');
     if (split.length == 2 && split[1].length == 6) {
       return split[1];
     }

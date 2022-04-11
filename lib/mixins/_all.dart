@@ -1,1 +1,1 @@
-export 'set_language_mixin.dart';
+export 'set_language_and_theme_mixin.dart';

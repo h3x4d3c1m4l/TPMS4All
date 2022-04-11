@@ -1,16 +1,17 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
+import 'dart:ui' as ui;
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:universal_tpms_reader/blocs/_all.dart';
 import 'package:universal_tpms_reader/components/_all.dart';
 import 'package:universal_tpms_reader/misc/converter.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
-import 'dart:ui' as ui;
 
 class TireInfo extends StatelessWidget {
   final Tire tire;
@@ -31,7 +32,6 @@ class TireInfo extends StatelessWidget {
     if (tire.isUnconfigured && tire.sensorAutoPair) {
       // auto pair enabled
       return DottedBorder(
-        
         child: Column(
           children: [
             const RepaintBoundary(child: ProgressRing()),
@@ -39,8 +39,8 @@ class TireInfo extends StatelessWidget {
             Text('home.vehicle_card.finding_sensor'.tr(), textAlign: TextAlign.center),
             const SizedBox(height: 20),
             TextButton(
-              child: Text('home.vehicle_card.select_manually_instead'.tr(), textAlign: TextAlign.center),
               onPressed: switchToManualSensorSelection,
+              child: Text('home.vehicle_card.select_manually_instead'.tr(), textAlign: TextAlign.center),
             ),
           ],
         ),
@@ -51,13 +51,13 @@ class TireInfo extends StatelessWidget {
         child: Column(
           children: [
             TextButton(
-              child: Text('home.vehicle_card.select_sensor'.tr()),
               onPressed: switchToManualSensorSelection,
+              child: Text('home.vehicle_card.select_sensor'.tr()),
             ),
             const SizedBox(height: 20),
             TextButton(
-              child: Text('home.vehicle_card.auto_find_sensor'.tr(), textAlign: TextAlign.center),
               onPressed: switchToAutoSensorSelection,
+              child: Text('home.vehicle_card.auto_find_sensor'.tr(), textAlign: TextAlign.center),
             ),
           ],
         ),
@@ -106,10 +106,7 @@ class TireInfo extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        Converter()
-                                .celciusToUnitFormatted(tire.lastTemperatureCelcius!, state.settings.temperatureUnit) +
-                            ' ' +
-                            Converter().getTemperatureSymbol(state.settings.temperatureUnit),
+                        '${Converter().celciusToUnitFormatted(tire.lastTemperatureCelcius!, state.settings.temperatureUnit)} ${Converter().getTemperatureSymbol(state.settings.temperatureUnit)}',
                       ),
                     ],
                   ),
@@ -130,7 +127,7 @@ class TireInfo extends StatelessWidget {
                           color: getBatteryIconColor(tire),
                         ),
                       ),
-                      Text(tire.lastBatteryPercentage!.toStringAsFixed(0) + " %"),
+                      Text("${tire.lastBatteryPercentage!.toStringAsFixed(0)} %"),
                     ],
                   ),
                 ],

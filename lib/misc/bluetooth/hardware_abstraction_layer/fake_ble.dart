@@ -1,14 +1,14 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-import 'dart:typed_data';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:universal_tpms_reader/misc/bluetooth/hardware_abstraction_layer/_all.dart';
-import 'package:uuid/uuid.dart' as uuid;
-import 'package:universal_tpms_reader/models/application/ble_device.dart';
 import 'package:universal_tpms_reader/models/application/_enums.dart';
+import 'package:universal_tpms_reader/models/application/ble_device.dart';
+import 'package:uuid/uuid.dart' as uuid;
 
 /// This is a fake Bluetooth Low Energy implementation used for testing whenever no sensors are in range, or when
 /// debugging on an emulator.
@@ -55,7 +55,7 @@ class FakeBle implements BluetoothHal {
   }
 
   BleDevice _getRandomBleDevice() {
-    int index = Random().nextInt(_fakeDevices.length - 1);
+    final int index = Random().nextInt(_fakeDevices.length - 1);
     return _fakeDevices[index];
   }
 }

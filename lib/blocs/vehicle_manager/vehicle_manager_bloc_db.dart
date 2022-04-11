@@ -8,10 +8,10 @@ part of 'vehicle_manager_bloc.dart';
 extension VehicleManagerBlocDb on VehicleManagerBloc {
   FutureOr<void> _onUpsertVehicleInDatabase(UpsertVehicleInDatabase event, Emitter<VehicleManagerState> emit) async {
     await _isar.writeTxn((isar) async {
-      DbVehicle? dbVehicle = await isar.vehicle.filter().uuidEqualTo(event.vehicle.uuid).findFirst();
+      final DbVehicle? dbVehicle = await isar.vehicle.filter().uuidEqualTo(event.vehicle.uuid).findFirst();
       if (dbVehicle == null) {
         // insert
-        DbVehicle? dbVehicle = DbVehicle()
+        final dbVehicle = DbVehicle()
           ..uuid = event.vehicle.uuid
           ..name = event.vehicle.name
           ..type = event.vehicle.type
@@ -37,9 +37,9 @@ extension VehicleManagerBlocDb on VehicleManagerBloc {
           ..color = event.vehicle.color;
 
         // tires
-        List<DbTire> updatedTires = dbVehicle.tires.toList();
-        for (DbTire dbTire in updatedTires) {
-          Tire tire = event.vehicle.tires.firstWhere((t) => t.uuid == dbTire.uuid);
+        final List<DbTire> updatedTires = dbVehicle.tires.toList();
+        for (final DbTire dbTire in updatedTires) {
+          final Tire tire = event.vehicle.tires.firstWhere((t) => t.uuid == dbTire.uuid);
 
           dbTire
             ..sensorBtAddress = tire.sensorBtAddress
@@ -69,7 +69,7 @@ extension VehicleManagerBlocDb on VehicleManagerBloc {
   FutureOr<void> _onDeleteVehicleFromDatabase(
       DeleteVehicleFromDatabase event, Emitter<VehicleManagerState> emit) async {
     await _isar.writeTxn((isar) async {
-      DbVehicle dbVehicle = (await isar.vehicle.filter().uuidEqualTo(event.uuid).findFirst())!;
+      final DbVehicle dbVehicle = (await isar.vehicle.filter().uuidEqualTo(event.uuid).findFirst())!;
       await dbVehicle.tires.load();
 
       await isar.vehicle.delete(dbVehicle.id!);
@@ -78,8 +78,8 @@ extension VehicleManagerBlocDb on VehicleManagerBloc {
   }
 
   Future<IList<Vehicle>> _getVehiclesFromIsar() async {
-    List<DbVehicle> dbVehicles = await _isar.vehicle.where().findAll();
-    for (DbVehicle v in dbVehicles) {
+    final List<DbVehicle> dbVehicles = await _isar.vehicle.where().findAll();
+    for (final DbVehicle v in dbVehicles) {
       // tires have to be lazy loaded
       await v.tires.load();
     }

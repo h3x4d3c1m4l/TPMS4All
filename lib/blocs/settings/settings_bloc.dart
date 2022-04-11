@@ -3,16 +3,16 @@
 
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_tpms_reader/models/application/_enums.dart';
 import 'package:universal_tpms_reader/models/application/settings.dart';
 
-part 'settings_state.dart';
-part 'settings_event.dart';
 part 'settings_bloc.freezed.dart';
+part 'settings_event.dart';
+part 'settings_state.dart';
 
 /// BLoC that uses shared_preferences to load and save settings (e.g. language, units of measure).
 /// 

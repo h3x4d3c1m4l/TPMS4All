@@ -1,8 +1,10 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
+import 'package:dart_extensions/dart_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:routemaster/routemaster.dart';
@@ -11,8 +13,6 @@ import 'package:universal_tpms_reader/components/_all.dart';
 import 'package:universal_tpms_reader/misc/extensions/ilist_extension.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:uuid/uuid.dart';
-import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
-import 'package:dart_extensions/dart_extensions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void renameVehicle(BuildContext context, Vehicle vehicle) async {
+  void renameVehicle(BuildContext context, Vehicle vehicle) {
     final formKey = GlobalKey<FormState>();
     String newName = '';
 
@@ -197,7 +197,6 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             FilledButton(
-              child: Text('rename'.tr()),
               onPressed: (formKey.currentState != null && formKey.currentState!.validate()) ? () {
                 if (!formKey.currentState!.validate()) return;
                 Navigator.pop(context);
@@ -205,12 +204,13 @@ class _HomePageState extends State<HomePage> {
                   _vehicleManagerBloc.state.vehicles.firstWhere((v) => v.uuid == vehicle.uuid).copyWith(name: newName),
                 ));
               } : null,
+              child: Text('rename'.tr()),
             ),
             Button(
-              child: Text('cancel'.tr()),
               onPressed: () {
                 Navigator.pop(context);
               },
+              child: Text('cancel'.tr()),
             )
           ],
         ),
@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void deleteVehicle(BuildContext context, Vehicle vehicle) async {
+  void deleteVehicle(BuildContext context, Vehicle vehicle) {
     showDialog(
       barrierDismissible: true,
       context: context,
@@ -244,8 +244,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void addNewVehicle(BuildContext context) async {
-    Vehicle? vehicle = await showBottomSheet(
+  Future<void> addNewVehicle(BuildContext context) async {
+    final Vehicle? vehicle = await showBottomSheet(
       backgroundColor: FluentTheme.of(context).micaBackgroundColor,
       context: context,
       builder: (context) {
@@ -260,11 +260,11 @@ class _HomePageState extends State<HomePage> {
 
   void scan() => _bluetoothBloc.add(BluetoothEvent.requestExtensiveScan(duration: const Duration(minutes: 1)));
 
-  void configureSensorManually(BuildContext context, UuidValue tireUuid) async {
+  Future<void> configureSensorManually(BuildContext context, UuidValue tireUuid) async {
     _setTireSensorAutoPair(tireUuid, false);
 
     scan();
-    SensorInfo? sensorInfo = await showBottomSheet(
+    final SensorInfo? sensorInfo = await showBottomSheet(
       backgroundColor: FluentTheme.of(context).micaBackgroundColor,
       context: context,
       builder: (context) {

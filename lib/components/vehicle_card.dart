@@ -33,6 +33,7 @@ class VehicleCard extends StatelessWidget {
                 ? Colors.orange
                 : Colors.green,
         glowRadius: 10,
+        repeat: vehicle.critical || vehicle.warning,
         child: LedIndicator(
           color: vehicle.critical
               ? LedColor.red
@@ -43,7 +44,6 @@ class VehicleCard extends StatelessWidget {
                       : LedColor.green,
           size: 8,
         ),
-        repeat: vehicle.critical || vehicle.warning,
       ),
 
       // vehicle name + type icon
@@ -60,7 +60,6 @@ class VehicleCard extends StatelessWidget {
       trailing: vehicle.unconfigured
           ? const Glow(
               glowRadius: 20,
-              glowColor: null,
               child: Icon(ms.FluentIcons.bluetooth_disabled_24_regular, color: Colors.grey),
             )
           : vehicle.anySensorUnavailable

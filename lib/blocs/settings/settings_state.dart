@@ -5,13 +5,13 @@ part of 'settings_bloc.dart';
 
 @freezed
 class SettingsState with _$SettingsState {
-  factory SettingsState.withDefaultSettings() => SettingsState(
-        isInitialized: false,
-        settings: Settings.withDefaults(),
-      );
-
   factory SettingsState({
     required bool isInitialized,
     required Settings settings,
   }) = _SettingsState;
+
+  factory SettingsState.withDefaultSettings() => SettingsState(
+        isInitialized: false,
+        settings: Settings.withDefaults(),
+      );
 }

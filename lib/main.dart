@@ -5,16 +5,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:system_theme/system_theme.dart';
 import 'package:universal_tpms_reader/blocs/settings/settings_bloc.dart';
+import 'package:universal_tpms_reader/components/_all.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:universal_tpms_reader/pages/_all.dart';
-import 'package:system_theme/system_theme.dart';
-
-import 'components/_all.dart';
 
 final bool _systemUsesDarkMode = SystemTheme.isDarkMode;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
@@ -57,6 +56,7 @@ class App extends StatelessWidget {
                 '/': (routeData) => const FluentPage(child: FirstStartPage()),
               }
             );
+            // ignore: dead_code
             return RouteMap(
               routes: {
                 '/': (routeData) => const FluentPage(child: HomePage()),

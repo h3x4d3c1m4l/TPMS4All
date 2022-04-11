@@ -5,14 +5,14 @@
 
 import 'dart:typed_data';
 
+import 'package:convert/convert.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:quick_blue/quick_blue.dart';
 import 'package:universal_tpms_reader/misc/bluetooth/hardware_abstraction_layer/_all.dart';
-import 'package:uuid/uuid.dart' as uuid;
-import 'package:universal_tpms_reader/models/application/ble_device.dart';
 import 'package:universal_tpms_reader/models/application/_enums.dart';
-import 'package:convert/convert.dart';
+import 'package:universal_tpms_reader/models/application/ble_device.dart';
+import 'package:uuid/uuid.dart' as uuid;
 
 /// This is a Bluetooth Low Energy implementation based on quick_blue.
 /// TODO: implement correct splitting of manufacturer data and device filtering by BLE service ID and LOTS of testing.
@@ -29,16 +29,16 @@ class QuickBlueBle implements BluetoothHal {
     required IList<uuid.UuidValue> withServices,
     BleScanMode scanMode = BleScanMode.balanced,
   }) async* {
-    List<Uuid> servicesView = withServices.map((s) => Uuid.parse(s.uuid)).toIList().unlockView;
+    final List<Uuid> servicesView = withServices.map((s) => Uuid.parse(s.uuid)).toIList().unlockView;
 
     QuickBlue.startScan();
-    List<String> seenDeviceIds = [];
+    final List<String> seenDeviceIds = [];
     yield* QuickBlue.scanResultStream.where((device) {
       if (!seenDeviceIds.contains(device.deviceId)) {
         seenDeviceIds.add(device.deviceId);
 
         // see: https://github.com/woodemi/quick_blue/issues/75
-        ByteData btAddressData = ByteData(8)..setUint64(0, int.parse(device.deviceId));
+        final ByteData btAddressData = ByteData(8)..setUint64(0, int.parse(device.deviceId));
         print(device.name.isEmpty ? "<EMPTY>" : device.name);
         print(hex.encode(btAddressData.buffer.asUint8List(2, 6)));
         print(hex.encode(device.manufacturerDataHead));

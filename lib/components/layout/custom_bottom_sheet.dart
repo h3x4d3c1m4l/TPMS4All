@@ -33,7 +33,6 @@ class CustomBottomSheet extends StatelessWidget {
           controller: scrollController,
           slivers: [
             SliverFillRemaining(
-              hasScrollBody: true,
               child: Column(
                 children: <Widget>[
                   BottomSheet.buildHandle(context),

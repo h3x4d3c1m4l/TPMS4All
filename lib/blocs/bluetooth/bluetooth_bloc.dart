@@ -4,8 +4,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:universal_tpms_reader/misc/bluetooth/hardware_abstraction_layer/_all.dart';
@@ -44,7 +44,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     // permissions are slightly different per platform and not applicable to desktop platforms
     if (Platform.isAndroid) {
       // Android
-      Map<Permission, PermissionStatus> statuses = await [
+      final Map<Permission, PermissionStatus> statuses = await [
         Permission.bluetoothScan,
         Permission.location,
       ].request();
@@ -55,7 +55,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       ));
     } else if (Platform.isIOS) {
       // iOS/iPadOS
-      Map<Permission, PermissionStatus> statuses = await [
+      final Map<Permission, PermissionStatus> statuses = await [
         Permission.bluetooth,
         Permission.location,
       ].request();
@@ -93,9 +93,9 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
 
       // check if 30 seconds have passed, otherwise simply wait
       if (_scanStarted != null) {
-        DateTime dontStartBefore = _scanStarted!.add(const Duration(seconds: 30));
+        final DateTime dontStartBefore = _scanStarted!.add(const Duration(seconds: 30));
         if (DateTime.now().isBefore(dontStartBefore)) {
-          bool cancelScan = await Future.any([
+          final bool cancelScan = await Future.any([
             Future.delayed(dontStartBefore.difference(DateTime.now()), () => false),
             _scanCancelCompleter!.future.then((_) => true),
           ]);
@@ -119,12 +119,12 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       _scanStarted = DateTime.now();
 
       // actually start scan
-      Stream<BleDevice> deviceStream =
+      final Stream<BleDevice> deviceStream =
           _bluetooth.scanForDevices(withServices: _bleServiceIds, scanMode: event.scanMode);
-      StreamSubscription<BleDevice> btDeviceStreamSub = deviceStream.listen((device) {
+      final StreamSubscription<BleDevice> btDeviceStreamSub = deviceStream.listen((device) {
         // convert raw device info to actual SensorInfo
-        for (TpmsMessageParser parser in TpmsMessageParser.allParsers) {
-          SensorInfo? sensorInfo = parser.parse(device);
+        for (final TpmsMessageParser parser in TpmsMessageParser.allParsers) {
+          final SensorInfo? sensorInfo = parser.parse(device);
           if (sensorInfo != null) {
             // update or insert sensor data
             emit(state.copyWith(
@@ -139,7 +139,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       });
 
       // check if we should start a new scan after this scan
-      bool shouldStartForegroundScan = await Future.any([
+      final bool shouldStartForegroundScan = await Future.any([
         _scanCancelCompleter!.future, // manual cancellation
         if (event.duration != null) Future.delayed(event.duration!, () => true), // cancellation due to timeout
       ]);
