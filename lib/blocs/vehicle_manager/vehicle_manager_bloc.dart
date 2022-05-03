@@ -14,6 +14,7 @@ import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_tpms_reader/models/persistence/_all.dart';
 import 'package:uuid/uuid.dart';
+import 'package:dart_extensions/dart_extensions.dart';
 
 part 'vehicle_manager_state.dart';
 part 'vehicle_manager_event.dart';
@@ -77,7 +78,7 @@ class VehicleManagerBloc extends Bloc<VehicleManagerEvent, VehicleManagerState> 
 
   FutureOr<void> _onUpsertSensorInfo(UpsertSensorInfo event, Emitter<VehicleManagerState> emit) async {
     Vehicle? vehicle = state.vehicles
-        .firstWhereOrNull((v) => v.tires.any((t) => _uuidOrSensorInfoMatchesTire(t, event.tireUuid, event.sensorInfo)));
+        .firstOrNullWhere((v) => v.tires.any((t) => _uuidOrSensorInfoMatchesTire(t, event.tireUuid, event.sensorInfo)));
 
     // if there's no match, just ignore this sensor data
     if (vehicle == null) return;

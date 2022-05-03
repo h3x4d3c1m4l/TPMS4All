@@ -130,7 +130,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
             emit(state.copyWith(
               lastSeenSensor: sensorInfo,
               foundSensors: event.storeSeenSensors
-                  ? state.foundSensors.upsert((r) => r.btAddress.equals(sensorInfo.btAddress), sensorInfo)
+                  ? state.foundSensors.upsert((r) => r.btAddress.deepEquals(sensorInfo.btAddress), sensorInfo)
                   : state.foundSensors,
               // ^ == operator won't compare Int8List's contents
             ));
