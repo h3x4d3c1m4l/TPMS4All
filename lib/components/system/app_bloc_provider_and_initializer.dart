@@ -26,7 +26,7 @@ class AppBlocProviderAndInitializer extends StatelessWidget {
         ),
         BlocProvider<BluetoothBloc>(
           create: (context) {
-            bluetoothBloc.add(const BluetoothEvent.requestPermissions());
+            bluetoothBloc.add(const BluetoothEvent.initialize());
             return bluetoothBloc;
           },
         ),
@@ -42,9 +42,7 @@ class AppBlocProviderAndInitializer extends StatelessWidget {
         bloc: bluetoothBloc,
         listenWhen: (previousState, state) =>
             !previousState.bluetoothPermissionsGranted && state.bluetoothPermissionsGranted,
-        listener: (contect, state) {
-          bluetoothBloc.add(BluetoothEvent.requestForegroundScan());
-        },
+        listener: (contect, state) => bluetoothBloc.add(BluetoothEvent.requestForegroundScan()),
         child: child,
       ),
     );

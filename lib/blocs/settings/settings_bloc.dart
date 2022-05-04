@@ -4,6 +4,7 @@
 import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,6 +51,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           TirePressureUnit.values[prefs.getInt('tirePressureUnit') ?? defaultSettings.tirePressureUnit.index],
       temperatureUnit: TemperatureUnit.values[prefs.getInt('temperatureUnit') ?? defaultSettings.temperatureUnit.index],
       appTheme: AppTheme.values[prefs.getInt('appTheme') ?? defaultSettings.appTheme.index],
+      firstStartKeys: prefs.getStringList('firstStartKeys')?.lock ?? const IListConst([]),
+      firstStartBuild: prefs.getInt('firstStartBuild') ?? defaultSettings.firstStartBuild,
+      firstStartVersion: prefs.getString('firstStartVersion') ?? defaultSettings.firstStartVersion,
     );
   }
 
@@ -64,5 +68,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     await prefs.setInt('tirePressureUnit', settings.tirePressureUnit.index);
     await prefs.setInt('temperatureUnit', settings.temperatureUnit.index);
     await prefs.setInt('appTheme', settings.appTheme.index);
+    await prefs.setStringList('firstStartKeys', settings.firstStartKeys.unlockView);
+    await prefs.setInt('firstStartBuild', settings.firstStartBuild);
+    await prefs.setString('firstStartVersion', settings.firstStartVersion);
   }
 }

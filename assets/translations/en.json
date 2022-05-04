@@ -1,9 +1,19 @@
 {
     "welcome": {
-        "language": "Language",
-        "theme": "Theme",
+        "changelog": {
+            "title": "Updated to {}",
+            "changes": "Changes:"
+        },
         "welcome": {
             "title": "Welcome to {}"
+        },
+        "permissions": {
+            "title": "Permissions for Bluetooth usage",
+            "explanation": "In order to access the Bluetooth hardware of your device, we need your explicit permission to access your location.\r\n\r\nThis permission is only used for Bluetooth access. We do not retrieve or use your physical location in any way.",
+            "try_again": "Try again please"
+        },
+        "add_first_vehicle": {
+            "title": "Add your vehicle"
         }
     },
     "home": {
@@ -89,5 +99,6 @@
     "yes": "Yes",
     "no": "No",
     "rename": "Rename",
-    "delete": "Delete"
+    "delete": "Delete",
+    "next": "Next"
 }

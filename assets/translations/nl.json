@@ -1,9 +1,19 @@
 {
     "welcome": {
-        "language": "Taal",
-        "theme": "Thema",
+        "changelog": {
+            "title": "Geupdate naar {}",
+            "changes": "Wijzigingen (Engels):"
+        },
         "welcome": {
             "title": "Welkom bij {}"
+        },
+        "permissions": {
+            "title": "Toestemming voor Bluetooth",
+            "explanation": "Om de Bluetooth-hardware in uw toestel te kunnen gebruiken, hebben we uw expliciete toestemming nodig voor het gebruik van uw locatie.\r\n\r\nDeze toestemming wordt enkel gebruikt voor Bluetooth. De applicatie doet niets met uw fysieke locatie.",
+            "try_again": "Probeer het opnieuw"
+        },
+        "add_first_vehicle": {
+            "title": "Add your vehicle"
         }
     },
     "home": {
@@ -89,5 +99,6 @@
     "yes": "Ja",
     "no": "Nee",
     "rename": "Hernoem",
-    "delete": "Verwijder"
+    "delete": "Verwijder",
+    "next": "Volgende"
 }

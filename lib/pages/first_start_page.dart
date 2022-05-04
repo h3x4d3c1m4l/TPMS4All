@@ -1,14 +1,21 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:get_it/get_it.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:universal_tpms_reader/blocs/settings/settings_bloc.dart';
+import 'package:universal_tpms_reader/blocs/_all.dart';
 import 'package:universal_tpms_reader/components/_all.dart';
 import 'package:universal_tpms_reader/mixins/set_language_and_theme_mixin.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
 
 class FirstStartPage extends StatefulWidget {
+  /// A list of known keys, keep this in sync with the step determination code below.
+  static const IList<String> knownFirstStartKeys = IListConst(['welcome']);
+
   const FirstStartPage({Key? key}) : super(key: key);
 
   @override
@@ -16,21 +23,30 @@ class FirstStartPage extends StatefulWidget {
 }
 
 class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixin, SetLanguageAndThemeMixin {
-  final _languageFlyoutController = FlyoutController();
-  final _themeFlyoutController = FlyoutController();
-  late final List<Widget> _steps;
+  late final BluetoothBloc _bluetoothBloc;
+  late final IList<Widget> _steps;
+  late final FlyoutController _languageFlyoutController;
+  late final FlyoutController _themeFlyoutController;
   int _currentStep = 0;
 
   @override
   void initState() {
     super.initState();
     settingsBloc = BlocProvider.of<SettingsBloc>(context);
+    _bluetoothBloc = BlocProvider.of<BluetoothBloc>(context);
+    _languageFlyoutController = FlyoutController();
+    _themeFlyoutController = FlyoutController();
 
-    // determine steps
+    // determine steps, keep this list in sync with the known key list above
+    // also keep this in sync with main._shouldShowFirstStartPage
     _steps = [
-      WelcomeStep(onNext: _next),
-      SettingsStep(onNext: _next),
-    ];
+      if (GetIt.I<PackageInfo>().version != settingsBloc.state.settings.firstStartVersion)
+        ChangelogStep(onNext: _goToNextStep),
+      if (!settingsBloc.state.settings.firstStartKeys.contains('welcome')) WelcomeStep(onNext: _goToNextStep),
+      //if (!settingsBloc.state.settings.firstStartKeys.contains('welcome')) SettingsStep(onNext: _goToNextStep),
+      if (!_bluetoothBloc.state.bluetoothPermissionsGranted) PermissionsStep(onNext: _goToNextStep),
+      if (!settingsBloc.state.settings.firstStartKeys.contains('welcome')) AddFirstVehicleStep(onNext: _goToNextStep),
+    ].lock;
   }
 
   @override
@@ -74,15 +90,25 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
     );
   }
 
-  void _back() {
+  void _goToPreviousStep() {
     if (_currentStep > 0) {
       setState(() => _currentStep--);
     }
   }
 
-  void _next() {
+  void _goToNextStep() {
     if (_currentStep < (_steps.length - 1)) {
       setState(() => _currentStep++);
+    } else {
+      // mark first start wizard as 'done'
+      settingsBloc.add(SaveSettings(
+        settingsBloc.state.settings.copyWith(
+          firstStartKeys: FirstStartPage.knownFirstStartKeys,
+          firstStartBuild: int.parse(GetIt.I<PackageInfo>().buildNumber),
+          firstStartVersion: GetIt.I<PackageInfo>().version,
+        ),
+      ));
+      Routemaster.of(context).replace('/dashboard');
     }
   }
 
@@ -99,7 +125,7 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
               ),
             );
           },
-          totalSteps: _steps.length,
+          totalSteps: _steps.length - 1,
           currentStep: _currentStep,
           selectedColor: FluentTheme.of(context).accentColor,
         ),
@@ -108,13 +134,14 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
   }
 
   Widget _getCenterWidget(BuildContext context) {
+    final ThemeData themeData = FluentTheme.of(context);
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Colors.white.withOpacity(0.8),
+        color: themeData.acrylicBackgroundColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.30),
+            color: themeData.shadowColor.withAlpha(100),
             blurRadius: 30.0,
             spreadRadius: 10.0,
             offset: const Offset(0, 10),
@@ -135,7 +162,7 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
                   ms.FluentIcons.arrow_left_16_regular,
                   size: 24,
                 ),
-                onPressed: _back,
+                onPressed: _goToPreviousStep,
               ),
             ),
           ),

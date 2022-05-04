@@ -36,6 +36,9 @@ class BluetoothEvent with _$BluetoothEvent {
   //       storeSeenSensors: false,
   //     );
 
+  /// Event to request updating the BLoC state with current permission state for utilizing Bluetooth
+  const factory BluetoothEvent.initialize() = InitializeRequest;
+
   /// Event to request permissions necessary to utilize Bluetooth.
   const factory BluetoothEvent.requestPermissions() = RequestPermissionsRequest;
 

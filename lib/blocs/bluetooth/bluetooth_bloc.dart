@@ -21,7 +21,7 @@ part 'bluetooth_state.dart';
 part 'bluetooth_bloc.freezed.dart';
 
 /// BLoC that manages Bluetooth scanning, parsing sensor data and storing any found TPMS sensors (in memory).
-/// 
+///
 /// Note: Persistence of any sensor data is managed by VehicleManagerBloc.
 class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   static final IList<UuidValue> _bleServiceIds = TpmsMessageParser.allParsers.expand((p) => p.bleServiceIds).toIList();
@@ -31,16 +31,42 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   Completer<void>? _scanFinishedCompleter;
 
   BluetoothBloc() : super(BluetoothState.defaultState()) {
-    _bluetooth = ReactiveBle(); // hardware implementation, seems very stable
-    //_bluetooth = FakeBle(); // send fake BLE reports (but data is actually in the same format as real sensors)
-    //_bluetooth = QuickBlueBle(); // hardware implementation, but not stable yet
-
+    on<InitializeRequest>(_onInitializeRequest);
     on<RequestPermissionsRequest>(_onRequestPermissionsRequest);
     on<SetScanModeRequest>(_onSetScanModeRequest);
     on<CancelScanRequest>(_onCancelScanRequest);
   }
 
+  FutureOr<void> _onInitializeRequest(InitializeRequest event, Emitter<BluetoothState> emit) async {
+    emit(state.copyWith(permissionStatusIsBeingUpdated: true));
+
+    _bluetooth = ReactiveBle(); // hardware implementation, seems very stable
+    //_bluetooth = FakeBle(); // send fake BLE reports (but data is actually in the same format as real sensors)
+    //_bluetooth = QuickBlueBle(); // hardware implementation, but not stable yet
+
+    // permissions are slightly different per platform and not applicable to desktop platforms
+    if (Platform.isAndroid) {
+      // Android
+      emit(state.copyWith(
+        permissionForLocation: await Permission.location.status,
+        permissionForBluetooth: await Permission.bluetoothScan.status,
+        permissionStatusIsBeingUpdated: false,
+        isInitialized: true,
+      ));
+    } else if (Platform.isIOS) {
+      // iOS/iPadOS
+      emit(state.copyWith(
+        permissionForLocation: await Permission.location.status,
+        permissionForBluetooth: await Permission.bluetooth.status,
+        permissionStatusIsBeingUpdated: false,
+        isInitialized: true,
+      ));
+    }
+  }
+
   FutureOr<void> _onRequestPermissionsRequest(RequestPermissionsRequest event, Emitter<BluetoothState> emit) async {
+    emit(state.copyWith(permissionStatusIsBeingUpdated: true));
+
     // permissions are slightly different per platform and not applicable to desktop platforms
     if (Platform.isAndroid) {
       // Android
@@ -49,9 +75,15 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
         Permission.location,
       ].request();
 
+      if (statuses[Permission.bluetoothScan] == PermissionStatus.permanentlyDenied ||
+          statuses[Permission.location] == PermissionStatus.permanentlyDenied) {
+        openAppSettings();
+      }
+
       emit(state.copyWith(
         permissionForLocation: statuses[Permission.location],
         permissionForBluetooth: statuses[Permission.bluetoothScan],
+        permissionStatusIsBeingUpdated: false,
       ));
     } else if (Platform.isIOS) {
       // iOS/iPadOS
@@ -63,6 +95,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       emit(state.copyWith(
         permissionForLocation: statuses[Permission.location],
         permissionForBluetooth: statuses[Permission.bluetooth],
+        permissionStatusIsBeingUpdated: false,
       ));
     }
   }
@@ -70,7 +103,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   /// This is more complicated than I wanted to have it, but it turned out Android throttles your Bluetooth searches
   /// (it will downgrade your search to 'opportunistic' if you start/stop search too often). This function takes that
   /// into account and automatically does the thottling to prevent the scan downgrade from occuring.
-  /// 
+  ///
   /// Could Have 1: Accurately implement throttle (max 5 times start/stop of scan) instead of throttling every scan
   /// Could Have 2: Turn throttling off for iOS/iPadOS
   FutureOr<void> _onSetScanModeRequest(SetScanModeRequest event, Emitter<BluetoothState> emit) async {

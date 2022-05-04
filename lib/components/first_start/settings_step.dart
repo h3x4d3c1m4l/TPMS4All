@@ -10,7 +10,7 @@ class SettingsStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        PageHeader(title: Text('welcome.welcome.title'.tr(args: ['SuperApp™']), textAlign: TextAlign.center)),
+        PageHeader(title: Text('welcome.settings.title'.tr(), textAlign: TextAlign.center)),
         const Expanded(
           child: FlutterLogo(size: 128),
         ),
@@ -24,7 +24,7 @@ class SettingsStep extends StatelessWidget {
             const SizedBox(width: 20),
             FilledButton(
               onPressed: onNext,
-              child: Text('home.vehicle_card.configure'.tr()),
+              child: Text('next'.tr()),
             ),
           ],
         )
