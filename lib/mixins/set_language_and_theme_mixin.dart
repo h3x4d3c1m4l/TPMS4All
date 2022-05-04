@@ -1,3 +1,6 @@
+// Copyright 2022 Sander in 't Hout.
+// Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
+
 import 'package:dart_extensions/dart_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

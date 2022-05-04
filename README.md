@@ -72,4 +72,4 @@ If you're testing on a emulator, you might want to uncomment the line in [`bluet
     - Doing this will make sure the app will run on newer Flutter releases with minimal fixes
   - Only use packages that support both Android and iOS/iPadOS
   - Keep the project up to date with the latest Flutter release and regularly run a `flutter pub outdated` to check for outdated dependencies
-    - Be sure to check changelogs for any upgraded dependencies to make sure the upgrade won't cause unwanted sideeffects
+    - Be sure to check changelogs for any upgraded dependencies to make sure the upgrade won't cause unwanted side effects
