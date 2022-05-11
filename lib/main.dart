@@ -1,6 +1,7 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
 
   GetIt.I.registerSingleton(await PackageInfo.fromPlatform());
+  GetIt.I.registerSingleton(await DeviceInfoPlugin().deviceInfo);
 
   // divide initialization of app into pieces to keep the code simple:
   // FluentTheme: sets ThemeData according to system setting (this will be overriden when settings are loaded)

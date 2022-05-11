@@ -4,9 +4,11 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get_it/get_it.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:universal_tpms_reader/misc/bluetooth/hardware_abstraction_layer/_all.dart';
 import 'package:universal_tpms_reader/misc/bluetooth/tpms/_all.dart';
@@ -48,7 +50,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     if (Platform.isAndroid) {
       // Android
       emit(state.copyWith(
-        permissionForLocation: await Permission.location.status,
+        permissionForLocation: await Permission.locationWhenInUse.status,
         permissionForBluetooth: await Permission.bluetoothScan.status,
         permissionStatusIsBeingUpdated: false,
         isInitialized: true,
@@ -70,34 +72,46 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     // permissions are slightly different per platform and not applicable to desktop platforms
     if (Platform.isAndroid) {
       // Android
-      final Map<Permission, PermissionStatus> statuses = await [
-        Permission.bluetoothScan,
-        Permission.location,
-      ].request();
-
-      if (statuses[Permission.bluetoothScan] == PermissionStatus.permanentlyDenied ||
-          statuses[Permission.location] == PermissionStatus.permanentlyDenied) {
-        openAppSettings();
-      }
-
-      emit(state.copyWith(
-        permissionForLocation: statuses[Permission.location],
-        permissionForBluetooth: statuses[Permission.bluetoothScan],
-        permissionStatusIsBeingUpdated: false,
-      ));
+      await _requestPermissionsAndroid(emit);
     } else if (Platform.isIOS) {
       // iOS/iPadOS
-      final Map<Permission, PermissionStatus> statuses = await [
-        Permission.bluetooth,
-        Permission.location,
-      ].request();
-
-      emit(state.copyWith(
-        permissionForLocation: statuses[Permission.location],
-        permissionForBluetooth: statuses[Permission.bluetooth],
-        permissionStatusIsBeingUpdated: false,
-      ));
+      await _requestPermissionsIOS(emit);
     }
+
+    emit(state.copyWith(permissionStatusIsBeingUpdated: false));
+  }
+
+  Future<void> _requestPermissionsAndroid(Emitter<BluetoothState> emit) async {
+    PermissionStatus location, bluetooth;
+
+    final AndroidDeviceInfo deviceInfo = GetIt.I.get<BaseDeviceInfo>() as AndroidDeviceInfo;
+    if (deviceInfo.version.sdkInt! < 31) {
+      // <= Android 11
+      location = await Permission.locationWhenInUse.request();
+      bluetooth = await Permission.bluetooth.request();
+    } else {
+      // >= Android 12
+      location = PermissionStatus.granted; // should not be needed (see AndroidManifest.xml)
+      bluetooth = await Permission.bluetoothScan.request();
+    }
+
+    emit(state.copyWith(
+      permissionForLocation: location,
+      permissionForBluetooth: bluetooth,
+    ));
+  }
+
+  Future<void> _requestPermissionsIOS(Emitter<BluetoothState> emit) async {
+    final Map<Permission, PermissionStatus> statuses = await [
+      Permission.bluetooth,
+      Permission.location,
+    ].request();
+
+    emit(state.copyWith(
+      permissionForLocation: statuses[Permission.location],
+      permissionForBluetooth: statuses[Permission.bluetooth],
+      permissionStatusIsBeingUpdated: false,
+    ));
   }
 
   /// This is more complicated than I wanted to have it, but it turned out Android throttles your Bluetooth searches
