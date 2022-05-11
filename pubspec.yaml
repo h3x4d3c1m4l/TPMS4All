@@ -11,23 +11,23 @@ environment:
 dependencies:
   avatar_glow: 2.0.2
   bloc_concurrency: 0.2.0
-  change: 0.3.1
+  change: 0.4.0
   convert: 3.0.1
   dart_extensions: 2.2.0
   dotted_border: 2.0.0+2
   easy_localization: 3.0.0
   fast_immutable_collections: 7.3.1
   fluent_ui: 3.11.1
-  fluentui_system_icons: 1.1.166
+  fluentui_system_icons: 1.1.168
   flutter:
     sdk: flutter
   flutter_bloc: 8.0.1
   flutter_colorpicker: 1.0.3
-  flutter_layout_grid: 2.0.0
+  flutter_layout_grid: 2.0.1
   flutter_native_splash: 2.1.6
   flutter_reactive_ble: 5.0.2
   flutter_svg: 1.0.3
-  freezed_annotation: 2.0.1
+  freezed_annotation: 2.0.3
   get_it: 7.2.0
   glowstone: 0.0.2
   isar: 2.5.0
@@ -36,12 +36,12 @@ dependencies:
   mobile_scanner: 1.0.0
   morphable_shape: 1.6.4
   package_info_plus: 1.4.2
-  path_provider: 2.0.9
+  path_provider: 2.0.10
   permission_handler: 9.2.0
   quick_blue: 0.4.1+1
   responsive_grid: 2.1.0
   routemaster: 1.0.0
-  shared_preferences: 2.0.13
+  shared_preferences: 2.0.14
   step_progress_indicator: 1.0.2
   system_theme: 2.0.0
   uuid: 3.0.6
@@ -52,7 +52,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  freezed: 2.0.2
+  freezed: 2.0.3
   isar_generator: 2.5.0
   lint: 1.8.2
 
