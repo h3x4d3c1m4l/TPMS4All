@@ -298,9 +298,11 @@ packages:
   fluent_ui:
     dependency: "direct main"
     description:
-      name: fluent_ui
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: "bugfix/flutter_3.0.0"
+      resolved-ref: c21b2c513f60f6cb66a01f01991a455cb45bae8e
+      url: "https://github.com/h3x4d3c1m4l/fluent_ui.git"
+    source: git
     version: "3.11.1"
   fluentui_system_icons:
     dependency: "direct main"
@@ -574,13 +576,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  mobile_scanner:
-    dependency: "direct main"
-    description:
-      name: mobile_scanner
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   morphable_shape:
     dependency: "direct main"
     description:
