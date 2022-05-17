@@ -1,7 +1,7 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-import 'package:dart_extensions/dart_extensions.dart';
+import 'package:collection/collection.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -37,7 +37,7 @@ mixin SetLanguageAndThemeMixin<T extends StatefulWidget> on State<T> {
       // by us; this will make Flutter crash :(
 
       // check if we support any locales the user has set as preferred in their OS
-      final Locale? supportedLocale = WidgetsBinding.instance!.window.locales.firstOrNullWhere((deviceLocale) =>
+      final Locale? supportedLocale = WidgetsBinding.instance.window.locales.firstWhereOrNull((deviceLocale) =>
           context.supportedLocales.any((supportedLocale) => supportedLocale.languageCode == deviceLocale.languageCode));
 
       if (supportedLocale != null) {

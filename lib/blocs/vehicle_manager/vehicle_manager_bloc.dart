@@ -4,6 +4,7 @@
 import 'dart:async';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:dart_extensions/dart_extensions.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,7 +15,6 @@ import 'package:universal_tpms_reader/misc/extensions/ilist_extension.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:universal_tpms_reader/models/persistence/_all.dart';
 import 'package:uuid/uuid.dart';
-import 'package:dart_extensions/dart_extensions.dart';
 
 part 'vehicle_manager_bloc.freezed.dart';
 part 'vehicle_manager_bloc_db.dart';
