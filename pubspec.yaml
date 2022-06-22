@@ -9,25 +9,25 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
-  app_settings: 4.1.6
+  app_settings: 4.1.8
   avatar_glow: 2.0.2
   bloc_concurrency: 0.2.0
   change: 0.4.0
   collection: 1.16.0
-  convert: 3.0.1
+  convert: 3.0.2
   dart_extensions: 2.2.0
-  device_info_plus: 3.2.3
+  device_info_plus: 4.0.0
   dotted_border: 2.0.0+2
   easy_localization: 3.0.1
   fast_immutable_collections: 7.4.1
   fluent_ui: 3.12.0
-  fluentui_system_icons: 1.1.170
+  fluentui_system_icons: 1.1.172
   flutter:
     sdk: flutter
   flutter_bloc: 8.0.1
   flutter_colorpicker: 1.0.3
   flutter_layout_grid: 2.0.1
-  flutter_native_splash: 2.2.2
+  flutter_native_splash: 2.2.3+1
   flutter_reactive_ble: 5.0.2
   flutter_svg: 1.1.0
   freezed_annotation: 2.0.3
@@ -38,10 +38,10 @@ dependencies:
   lottie: 1.3.0
   morphable_shape: 1.6.4
   package_info_plus: 1.4.2
-  path_provider: 2.0.10
-  permission_handler: 9.2.0
+  path_provider: 2.0.11
+  permission_handler: 10.0.0
   responsive_grid: 2.1.0
-  routemaster: 1.0.0
+  routemaster: 1.0.1
   shared_preferences: 2.0.15
   step_progress_indicator: 1.0.2
   system_theme: 2.0.0
