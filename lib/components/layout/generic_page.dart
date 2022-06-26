@@ -15,7 +15,7 @@ class GenericPage extends StatelessWidget {
     return NavigationView(
       content: ScaffoldPage(
         header: GestureDetector(
-          onTap: () => Routemaster.of(context).pop(),
+          onTap: () => Routemaster.of(context).history.back(),
           child: PageHeader(
             title: Text(title),
             leading: const Padding(

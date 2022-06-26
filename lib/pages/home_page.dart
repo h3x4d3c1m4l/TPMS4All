@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
           PaneItemAction(
             icon: const Icon(FluentIcons.settings),
             title: Text('settings.title'.tr()),
-            onTap: () async {
+            onTap: () {
               Routemaster.of(context).push('/settings');
             },
           ),
