@@ -28,5 +28,15 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>  
+	<string>Detect and read from TPMS sensors</string>  
+	<key>NSBluetoothPeripheralUsageDescription</key>  
+	<string>Detect and read from TPMS sensors</string>  
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>  
+	<string>Detect and read from TPMS sensors</string>  
+	<key>NSLocationAlwaysUsageDescription</key>  
+	<string>Detect and read from TPMS sensors</string>  
+	<key>NSLocationWhenInUseUsageDescription</key>  
+	<string>Detect and read from TPMS sensors</string>
 </dict>
 </plist>

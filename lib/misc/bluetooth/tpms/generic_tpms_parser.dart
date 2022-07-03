@@ -31,7 +31,7 @@ class GenericTpmsParser extends TpmsMessageParser {
       serial: _getSerialFromBluetoothName(device.name) ?? _getSerialFromVendorData(device.vendorData),
       lastSeen: DateTime.now(),
       vendorName: 'Generic',
-      productName: _getProductNameFromBluetoothName(device.name) ?? 'TPMS',
+      productName: _getProductNameFromBluetoothName(device.name),
       suggestsLocationOnVehicle: _getSuggestedTireLocation(device.vendorData[2]),
       tirePressureKPa: byteData.getInt32(8, Endian.little).toDouble() / 1000,
       temperatureCelcius: byteData.getInt32(12, Endian.little).toDouble() / 100,
@@ -54,7 +54,7 @@ class GenericTpmsParser extends TpmsMessageParser {
     return null;
   }
 
-  static String? _getProductNameFromBluetoothName(String name) {
+  static String _getProductNameFromBluetoothName(String name) {
     // e.g. TPMS2_1A2B3C
     switch (name.substring(0, 5)) {
       case 'TPMS1':

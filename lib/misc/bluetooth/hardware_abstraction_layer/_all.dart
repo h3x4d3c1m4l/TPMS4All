@@ -3,4 +3,5 @@
 
 export 'bluetooth_hal.dart';
 export 'fake_ble.dart';
+export 'quick_blue_ble.dart';
 export 'reactive_ble.dart';
