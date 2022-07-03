@@ -1,6 +1,7 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
+
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
@@ -46,7 +47,6 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
       if (GetIt.I<PackageInfo>().version != settingsBloc.state.settings.firstStartVersion)
         ChangelogStep(onNext: _goToNextStep),
       if (!settingsBloc.state.settings.firstStartKeys.contains('welcome')) WelcomeStep(onNext: _goToNextStep),
-      //if (!settingsBloc.state.settings.firstStartKeys.contains('welcome')) SettingsStep(onNext: _goToNextStep),
       if (!_bluetoothBloc.state.bluetoothPermissionsGranted) PermissionsStep(onNext: _goToNextStep),
       if (!settingsBloc.state.settings.firstStartKeys.contains('welcome')) AddFirstVehicleStep(onNext: _goToNextStep),
     ].lock;
@@ -104,7 +104,7 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
       setState(() => _currentStep++);
     } else {
       // mark first start wizard as 'done'
-      settingsBloc.add(SaveSettings(
+      settingsBloc.add(SettingsEvent.settingsChanged(
         settingsBloc.state.settings.copyWith(
           firstStartKeys: FirstStartPage.knownFirstStartKeys,
           firstStartBuild: int.parse(GetIt.I<PackageInfo>().buildNumber),
@@ -231,7 +231,7 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
                 controller: _languageFlyoutController,
                 placement: FlyoutPlacement.end,
                 content: (BuildContext context) {
-                  final List<ComboboxItem<String?>> options = SetLanguageAndThemeMixin.getLanguageOptions();
+                  final List<ComboboxItem<String?>> options = getLanguageOptions();
                   return FlyoutContent(
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),

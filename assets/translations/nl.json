@@ -68,8 +68,8 @@
                 "subtitle": "App weergavetaal",
                 "options": {
                     "default": "Standaard",
-                    "english": "Engels",
-                    "dutch": "Nederlands"
+                    "en": "Engels",
+                    "nl": "Nederlands"
                 }
             },
             "tire_pressure_unit": {

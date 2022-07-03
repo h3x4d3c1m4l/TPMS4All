@@ -6,11 +6,11 @@ import 'dart:typed_data';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:universal_tpms_reader/models/application/_enums.dart';
 
-part 'sensor_info.freezed.dart';
+part 'sensor_data.freezed.dart';
 
 @freezed
-class SensorInfo with _$SensorInfo {
-  const factory SensorInfo({
+class SensorData with _$SensorData {
+  const factory SensorData({
     required Uint8List btAddress,
     required String serial,
     required DateTime lastSeen,
@@ -21,6 +21,6 @@ class SensorInfo with _$SensorInfo {
     double? temperatureCelcius,
     double? batteryPercentage,
     bool? leakDetected,
-  }) = _SensorInfo;
-  const SensorInfo._();
+  }) = _SensorData;
+  const SensorData._();
 }

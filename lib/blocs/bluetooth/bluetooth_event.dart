@@ -3,45 +3,46 @@
 
 part of 'bluetooth_bloc.dart';
 
-@freezed
+@Freezed(
+  copyWith: false,
+  equal: false,
+)
 class BluetoothEvent with _$BluetoothEvent {
-  const factory BluetoothEvent.started() = _Started;
+  const factory BluetoothEvent.blocCreated() = _BluetoothBlocCreated;
 
   /// Generic event to request a Bluetooth scan.
-  const factory BluetoothEvent.setScanMode({
+  const factory BluetoothEvent.scanRequested({
     required BleScanMode scanMode,
     Duration? duration,
     required bool storeSeenSensors,
-  }) = SetScanModeRequest;
+  }) = _BluetoothScanRequested;
 
   /// Event to request a low latency Bluetooth scan.
-  factory BluetoothEvent.requestExtensiveScan({
+  factory BluetoothEvent.extensiveScanRequested({
     required Duration duration,
   }) =>
-      BluetoothEvent.setScanMode(
+      BluetoothEvent.scanRequested(
         scanMode: BleScanMode.lowLatency,
         duration: duration,
         storeSeenSensors: true,
       );
 
   /// Event to request a 'balanced' Bluetooth scan.
-  factory BluetoothEvent.requestForegroundScan() => const BluetoothEvent.setScanMode(
+  factory BluetoothEvent.foregroundScanRequested() => const BluetoothEvent.scanRequested(
         scanMode: BleScanMode.balanced,
         storeSeenSensors: false,
       );
 
-  // TODO: add some kind of permanent notification (to be enable by setting) to run this type while the app is minimized
-  // factory BluetoothEvent.requestBackgroundScan() => const BluetoothEvent.setScanMode(
+  /// Event to request permissions necessary to utilize Bluetooth.
+  const factory BluetoothEvent.permissionsRequested() = _BluetoothPermissionsRequested;
+
+  /// Event to cancel the ongoing Bluetooth scan.
+  const factory BluetoothEvent.scanCancelRequested() = _BluetoothScanCancelRequested;
+
+  // Could Have:
+  // add a permanent notification (to be enable by setting) to run the background scan while the app is minimized
+  // factory BluetoothEvent.backgroundScanRequested() => const BluetoothEvent.scanRequested(
   //       scanMode: BleScanMode.lowPower,
   //       storeSeenSensors: false,
   //     );
-
-  /// Event to request updating the BLoC state with current permission state for utilizing Bluetooth
-  const factory BluetoothEvent.initialize() = InitializeRequest;
-
-  /// Event to request permissions necessary to utilize Bluetooth.
-  const factory BluetoothEvent.requestPermissions() = RequestPermissionsRequest;
-
-  /// Event to cancel the ongoing Bluetooth scan.
-  const factory BluetoothEvent.cancelScanEvent() = CancelScanRequest;
 }

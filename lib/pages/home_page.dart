@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late VehicleManagerBloc _vehicleManagerBloc;
+  late VehiclesBloc _vehiclesBloc;
   late BluetoothBloc _bluetoothBloc;
   bool vehicleEditModeEnabled = false;
   final Key _someKey = GlobalKey();
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    _vehicleManagerBloc = BlocProvider.of<VehicleManagerBloc>(context);
+    _vehiclesBloc = BlocProvider.of<VehiclesBloc>(context);
     _bluetoothBloc = BlocProvider.of<BluetoothBloc>(context);
   }
 
@@ -41,12 +41,14 @@ class _HomePageState extends State<HomePage> {
       appBar: NavigationAppBar(
         automaticallyImplyLeading: false,
         title: Text('home.title'.tr()),
-        actions: Padding(
-          padding: const EdgeInsets.only(top: 3, right: 5),
-          child: IconButton(
-            icon: const Icon(FluentIcons.edit),
-            onPressed: () => setState(() => vehicleEditModeEnabled = !vehicleEditModeEnabled),
-          ),
+        actions: Row(
+          children: [
+            const Spacer(),
+            IconButton(
+              icon: const Icon(FluentIcons.edit),
+              onPressed: () => setState(() => vehicleEditModeEnabled = !vehicleEditModeEnabled),
+            ),
+          ],
         ),
       ),
       pane: NavigationPane(
@@ -100,7 +102,7 @@ class _HomePageState extends State<HomePage> {
       ),
       content: Container(
         margin: const EdgeInsets.all(10),
-        child: BlocBuilder<VehicleManagerBloc, VehicleManagerState>(
+        child: BlocBuilder<VehiclesBloc, VehiclesState>(
           builder: (context, state) {
             return ResponsiveGridList(
               desiredItemWidth: 300,
@@ -185,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                       return null;
                     } else if (value.isNullOrWhiteSpace) {
                       return 'home.add_vehicle.name_validation_empty'.tr();
-                    } else if (_vehicleManagerBloc.state.vehicles
+                    } else if (_vehiclesBloc.state.vehicles
                         .any((v) => v.name.toLowerCase() == value!.toLowerCase())) {
                       return 'home.add_vehicle.name_validation_not_unique'.tr();
                     }
@@ -197,13 +199,13 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             FilledButton(
-              onPressed: (formKey.currentState != null && formKey.currentState!.validate()) ? () {
+              onPressed: () {
                 if (!formKey.currentState!.validate()) return;
                 Navigator.pop(context);
-                _vehicleManagerBloc.add(UpsertVehicle(
-                  _vehicleManagerBloc.state.vehicles.firstWhere((v) => v.uuid == vehicle.uuid).copyWith(name: newName),
+                _vehiclesBloc.add(VehiclesEvent.vehicleCreatedOrModified(
+                  _vehiclesBloc.state.vehicles.firstWhere((v) => v.uuid == vehicle.uuid).copyWith(name: newName),
                 ));
-              } : null,
+              },
               child: Text('rename'.tr()),
             ),
             Button(
@@ -230,7 +232,7 @@ class _HomePageState extends State<HomePage> {
             child: Text('delete'.tr()),
             onPressed: () {
               Navigator.pop(context);
-              _vehicleManagerBloc.add(DeleteVehicle(vehicle.uuid));
+              _vehiclesBloc.add(VehiclesEvent.vehicleDeleteConfirmed(vehicle.uuid));
             },
           ),
           Button(
@@ -254,38 +256,38 @@ class _HomePageState extends State<HomePage> {
     );
 
     if (vehicle != null) {
-      _vehicleManagerBloc.add(UpsertVehicle(vehicle));
+      _vehiclesBloc.add(VehiclesEvent.vehicleCreatedOrModified(vehicle));
     }
   }
 
-  void scan() => _bluetoothBloc.add(BluetoothEvent.requestExtensiveScan(duration: const Duration(minutes: 1)));
+  void scan() => _bluetoothBloc.add(BluetoothEvent.extensiveScanRequested(duration: const Duration(minutes: 1)));
 
   Future<void> configureSensorManually(BuildContext context, UuidValue tireUuid) async {
     _setTireSensorAutoPair(tireUuid, false);
 
     scan();
-    final SensorInfo? sensorInfo = await showBottomSheet(
+    final SensorData? sensorData = await showBottomSheet(
       backgroundColor: FluentTheme.of(context).micaBackgroundColor,
       context: context,
       builder: (context) {
         return ConfigureSensor(retryScan: scan);
       },
     );
-    _bluetoothBloc.add(BluetoothEvent.requestForegroundScan());
+    _bluetoothBloc.add(BluetoothEvent.foregroundScanRequested());
 
-    if (sensorInfo != null) {
-      _vehicleManagerBloc.add(UpsertSensorInfo(sensorInfo, tireUuid));
+    if (sensorData != null) {
+      _vehiclesBloc.add(VehiclesEvent.sensorDataReceived(sensorData, tireUuid));
     }
   }
 
   void configureSensorAutomatically(UuidValue tireUuid) => _setTireSensorAutoPair(tireUuid, true);
 
   void _setTireSensorAutoPair(UuidValue tireUuid, bool value) {
-    Vehicle vehicle = _vehicleManagerBloc.state.vehicles.firstWhere((v) => v.tires.any((t) => t.uuid == tireUuid));
+    Vehicle vehicle = _vehiclesBloc.state.vehicles.firstWhere((v) => v.tires.any((t) => t.uuid == tireUuid));
     vehicle = vehicle.copyWith(
         tires: vehicle.tires.mutate((t) => t.uuid == tireUuid, (t) {
       return t.copyWith(sensorAutoPair: value);
     }));
-    _vehicleManagerBloc.add(UpsertVehicle(vehicle));
+    _vehiclesBloc.add(VehiclesEvent.vehicleCreatedOrModified(vehicle));
   }
 }

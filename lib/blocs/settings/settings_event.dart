@@ -3,25 +3,15 @@
 
 part of 'settings_bloc.dart';
 
-@immutable
-abstract class SettingsEvent {}
+@Freezed(
+  copyWith: false,
+  equal: false,
+)
+class SettingsEvent with _$SettingsEvent {
+  const factory SettingsEvent.blocCreated() = _SettingsBlocCreated;
 
-@immutable
-class LoadSettingsFromStorageEvent extends SettingsEvent {}
+  /// Save updated settings in memory
+  const factory SettingsEvent.settingsChanged(Settings settings) = _SettingsChanged;
 
-/// Save updated settings in memory. Also an [WriteSettingsToStorage] event should be sent to
-/// persist setting asynchronously.
-@immutable
-class SaveSettings extends SettingsEvent {
-  final Settings settings;
-
-  SaveSettings(this.settings);
-}
-
-/// Persist updated settings. This should be send automatically by the handler of the [SaveSettings] event.
-@immutable
-class WriteSettingsToStorage extends SettingsEvent {
-  final Settings settings;
-
-  WriteSettingsToStorage(this.settings);
+  const factory SettingsEvent.settingsEmitted(Settings settings) = _SettingsEmitted;
 }

@@ -11,17 +11,17 @@ import 'package:universal_tpms_reader/models/application/_all.dart';
 mixin SetLanguageAndThemeMixin<T extends StatefulWidget> on State<T> {
   late SettingsBloc settingsBloc;
 
-  static List<ComboboxItem<String?>> getLanguageOptions() {
+  List<ComboboxItem<String?>> getLanguageOptions() {
     return <ComboboxItem<String?>>[
       ComboboxItem<String>(child: Text('settings.settings.language.options.default'.tr())),
-      ComboboxItem<String>(value: 'en', child: Text('settings.settings.language.options.english'.tr())),
-      ComboboxItem<String>(value: 'nl', child: Text('settings.settings.language.options.dutch'.tr())),
+      ...settingsBloc.state.availableTranslations.map((languageCode) => ComboboxItem<String>(
+          value: languageCode, child: Text('settings.settings.language.options.$languageCode'.tr()))),
     ].lock.unlockView;
   }
 
   Future applyAndStoreLanguage(String? languageCode) async {
     // save setting
-    settingsBloc.add(SaveSettings(
+    settingsBloc.add(SettingsEvent.settingsChanged(
       settingsBloc.state.settings.copyWith(languageCode: languageCode),
     ));
 
@@ -57,7 +57,7 @@ mixin SetLanguageAndThemeMixin<T extends StatefulWidget> on State<T> {
   }
 
   void applyAndStoreAppTheme(AppTheme appTheme) {
-    settingsBloc.add(SaveSettings(
+    settingsBloc.add(SettingsEvent.settingsChanged(
       settingsBloc.state.settings.copyWith(appTheme: appTheme),
     ));
   }

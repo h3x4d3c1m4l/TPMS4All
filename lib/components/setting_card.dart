@@ -20,7 +20,6 @@ class SettingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 0.5,
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: ListTile(
         leading: Icon(icon),

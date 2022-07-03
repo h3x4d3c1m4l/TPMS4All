@@ -24,8 +24,8 @@ class _ConfigureSensorState extends State<ConfigureSensor> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VehicleManagerBloc, VehicleManagerState>(
-      builder: (context, vehicleManagerState) {
+    return BlocBuilder<VehiclesBloc, VehiclesState>(
+      builder: (context, vehiclesState) {
         return BlocBuilder<BluetoothBloc, BluetoothState>(
           builder: (context, bluetoothState) {
             return Form(
@@ -40,7 +40,7 @@ class _ConfigureSensorState extends State<ConfigureSensor> {
                     : ListView(
                         shrinkWrap: true,
                         children: bluetoothState.foundSensors
-                            .where((s) => !vehicleManagerState.vehicles
+                            .where((s) => !vehiclesState.vehicles
                                 .any((v) => v.tires.any((t) => t.sensorSerial == s.serial)))
                             .map((s) => TappableListTile(
                                   leading: const Icon(ms.FluentIcons.bluetooth_20_regular),

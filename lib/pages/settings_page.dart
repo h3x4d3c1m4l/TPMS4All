@@ -48,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
                         child: Combobox<String?>(
                           placeholder: Text('settings.settings.language.options.default'.tr()),
                           isExpanded: true,
-                          items: SetLanguageAndThemeMixin.getLanguageOptions(),
+                          items: getLanguageOptions(),
                           value: settings.languageCode,
                           onChanged: (languageCode) {
                             applyAndStoreLanguage(languageCode);
@@ -71,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
                           items: getTirePressureUnitOptions(),
                           value: settings.tirePressureUnit,
                           onChanged: (tirePressureUnit) {
-                            settingsBloc.add(SaveSettings(
+                            settingsBloc.add(SettingsEvent.settingsChanged(
                               settings.copyWith(tirePressureUnit: tirePressureUnit!),
                             ));
                           },
@@ -93,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
                           items: getTemperatureUnitOptions(),
                           value: settings.temperatureUnit,
                           onChanged: (temperatureUnit) {
-                            settingsBloc.add(SaveSettings(
+                            settingsBloc.add(SettingsEvent.settingsChanged(
                               settings.copyWith(temperatureUnit: temperatureUnit!),
                             ));
                           },
@@ -121,7 +121,10 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
                   ],
                 ),
               ),
-              InfoBar(title: Text('settings.changes_will_be_saved_automatically'.tr())),
+              SizedBox(
+                width: double.maxFinite,
+                child: InfoBar(title: Text('settings.changes_will_be_saved_automatically'.tr())),
+              ),
               const SizedBox(height: 10),
             ],
           ),

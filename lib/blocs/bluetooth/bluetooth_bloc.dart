@@ -24,7 +24,7 @@ part 'bluetooth_bloc.freezed.dart';
 
 /// BLoC that manages Bluetooth scanning, parsing sensor data and storing any found TPMS sensors (in memory).
 ///
-/// Note: Persistence of any sensor data is managed by VehicleManagerBloc.
+/// Note: Persistence of any sensor data is managed by VehiclesBloc.
 class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   static final IList<UuidValue> _bleServiceIds = TpmsMessageParser.allParsers.expand((p) => p.bleServiceIds).toIList();
   late final BluetoothHal _bluetooth;
@@ -32,14 +32,14 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   Completer<bool>? _scanCancelCompleter;
   Completer<void>? _scanFinishedCompleter;
 
-  BluetoothBloc() : super(BluetoothState.defaultState()) {
-    on<InitializeRequest>(_onInitializeRequest);
-    on<RequestPermissionsRequest>(_onRequestPermissionsRequest);
-    on<SetScanModeRequest>(_onSetScanModeRequest);
-    on<CancelScanRequest>(_onCancelScanRequest);
+  BluetoothBloc() : super(BluetoothState.initial()) {
+    on<_BluetoothBlocCreated>(_onBlocCreated);
+    on<_BluetoothPermissionsRequested>(_onPermissionsRequested);
+    on<_BluetoothScanRequested>(_onScanRequested);
+    on<_BluetoothScanCancelRequested>(_onScanCancelRequested);
   }
 
-  FutureOr<void> _onInitializeRequest(InitializeRequest event, Emitter<BluetoothState> emit) async {
+  FutureOr<void> _onBlocCreated(_BluetoothBlocCreated event, Emitter<BluetoothState> emit) async {
     emit(state.copyWith(permissionStatusIsBeingUpdated: true));
 
     _bluetooth = ReactiveBle(); // hardware implementation, seems very stable
@@ -66,7 +66,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     }
   }
 
-  FutureOr<void> _onRequestPermissionsRequest(RequestPermissionsRequest event, Emitter<BluetoothState> emit) async {
+  FutureOr<void> _onPermissionsRequested(_BluetoothPermissionsRequested event, Emitter<BluetoothState> emit) async {
     emit(state.copyWith(permissionStatusIsBeingUpdated: true));
 
     // permissions are slightly different per platform and not applicable to desktop platforms
@@ -120,7 +120,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   ///
   /// Could Have 1: Accurately implement throttle (max 5 times start/stop of scan) instead of throttling every scan
   /// Could Have 2: Turn throttling off for iOS/iPadOS
-  FutureOr<void> _onSetScanModeRequest(SetScanModeRequest event, Emitter<BluetoothState> emit) async {
+  FutureOr<void> _onScanRequested(_BluetoothScanRequested event, Emitter<BluetoothState> emit) async {
     try {
       // cancel previous scan and await it's completion
       _scanCancelCompleter?.complete(false);
@@ -160,7 +160,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
         scanMode: event.scanMode,
         scanDuration: event.duration,
         scanStart: DateTime.now(),
-        foundSensors: event.storeSeenSensors ? const IListConst<SensorInfo>([]) : state.foundSensors,
+        foundSensors: event.storeSeenSensors ? const IListConst<SensorData>([]) : state.foundSensors,
       ));
 
       _scanStarted = DateTime.now();
@@ -169,15 +169,15 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       final Stream<BleDevice> deviceStream =
           _bluetooth.scanForDevices(withServices: _bleServiceIds, scanMode: event.scanMode);
       final StreamSubscription<BleDevice> btDeviceStreamSub = deviceStream.listen((device) {
-        // convert raw device info to actual SensorInfo
+        // convert raw device info to actual SensorData
         for (final TpmsMessageParser parser in TpmsMessageParser.allParsers) {
-          final SensorInfo? sensorInfo = parser.parse(device);
-          if (sensorInfo != null) {
+          final SensorData? sensorData = parser.parse(device);
+          if (sensorData != null) {
             // update or insert sensor data
             emit(state.copyWith(
-              lastSeenSensor: sensorInfo,
+              lastSeenSensor: sensorData,
               foundSensors: event.storeSeenSensors
-                  ? state.foundSensors.upsert((r) => r.btAddress.deepEquals(sensorInfo.btAddress), sensorInfo)
+                  ? state.foundSensors.upsert((r) => r.btAddress.deepEquals(sensorData.btAddress), sensorData)
                   : state.foundSensors,
               // ^ == operator won't compare Int8List's contents
             ));
@@ -203,7 +203,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
       ));
 
       if (shouldStartForegroundScan) {
-        add(BluetoothEvent.requestForegroundScan());
+        add(BluetoothEvent.foregroundScanRequested());
       }
     } finally {
       // make sure the next scan will be able to run
@@ -211,7 +211,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     }
   }
 
-  FutureOr<void> _onCancelScanRequest(CancelScanRequest event, Emitter<BluetoothState> emit) {
+  FutureOr<void> _onScanCancelRequested(_BluetoothScanCancelRequested event, Emitter<BluetoothState> emit) {
     _scanCancelCompleter?.complete(true);
     _scanCancelCompleter = null;
   }

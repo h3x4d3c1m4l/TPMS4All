@@ -4,7 +4,7 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:universal_tpms_reader/misc/bluetooth/tpms/_all.dart';
 import 'package:universal_tpms_reader/models/application/ble_device.dart';
-import 'package:universal_tpms_reader/models/application/sensor_info.dart';
+import 'package:universal_tpms_reader/models/application/sensor_data.dart';
 import 'package:uuid/uuid.dart';
 
 abstract class TpmsMessageParser {
@@ -15,5 +15,5 @@ abstract class TpmsMessageParser {
 
   const TpmsMessageParser();
 
-  SensorInfo? parse(BleDevice device);
+  SensorData? parse(BleDevice device);
 }

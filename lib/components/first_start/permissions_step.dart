@@ -79,6 +79,6 @@ class _PermissionsStepState extends State<PermissionsStep> {
 
   void _requestPermissions(BuildContext context) {
     setState(() => _failed = false);
-    _bluetoothBloc.add(const BluetoothEvent.requestPermissions());
+    _bluetoothBloc.add(const BluetoothEvent.permissionsRequested());
   }
 }

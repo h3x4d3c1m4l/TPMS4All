@@ -1,12 +1,12 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-part of 'vehicle_manager_bloc.dart';
+part of 'vehicles_bloc.dart';
 
 /// This extension contains the persistence functions of the Vehicle Manager BLoC. This is doing just to keep
 /// vehicle_manager_bloc.dart more manageable in terms of line count.
-extension VehicleManagerBlocDb on VehicleManagerBloc {
-  FutureOr<void> _onUpsertVehicleInDatabase(UpsertVehicleInDatabase event, Emitter<VehicleManagerState> emit) async {
+extension VehiclesBlocDb on VehiclesBloc {
+  FutureOr<void> _onNewOrUpdatedVehicleEmitted(_VehiclesNewOrUpdatedVehicleEmitted event, Emitter<VehiclesState> emit) async {
     await _isar.writeTxn((isar) async {
       final DbVehicle? dbVehicle = await isar.vehicle.filter().uuidEqualTo(event.vehicle.uuid).findFirst();
       if (dbVehicle == null) {
@@ -66,10 +66,10 @@ extension VehicleManagerBlocDb on VehicleManagerBloc {
     });
   }
 
-  FutureOr<void> _onDeleteVehicleFromDatabase(
-      DeleteVehicleFromDatabase event, Emitter<VehicleManagerState> emit) async {
+  FutureOr<void> _onVehicleDeleteEmitted(
+      _VehiclesVehicleDeleteEmitted event, Emitter<VehiclesState> emit) async {
     await _isar.writeTxn((isar) async {
-      final DbVehicle dbVehicle = (await isar.vehicle.filter().uuidEqualTo(event.uuid).findFirst())!;
+      final DbVehicle dbVehicle = (await isar.vehicle.filter().uuidEqualTo(event.vehicleUuid).findFirst())!;
       await dbVehicle.tires.load();
 
       await isar.vehicle.delete(dbVehicle.id!);

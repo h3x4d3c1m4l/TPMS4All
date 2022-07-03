@@ -15,15 +15,15 @@ class AppBlocInitializationAwaiter extends StatelessWidget {
     return BlocSelector<SettingsBloc, SettingsState, bool>(
       selector: (state) => state.isInitialized,
       builder: (context, settingsIsInitialized) {
-        return BlocSelector<VehicleManagerBloc, VehicleManagerState, bool>(
+        return BlocSelector<VehiclesBloc, VehiclesState, bool>(
           selector: (state) => state.isInitialized,
-          builder: (context, vehicleManagerIsInitialized) {
+          builder: (context, vehiclesBlocIsInitialized) {
             return BlocSelector<BluetoothBloc, BluetoothState, bool>(
               selector: (state) => state.isInitialized,
               builder: (context, bluetoothIsInitialized) {
                 return AnimatedSwitcher(
                   duration: const Duration(milliseconds: 250),
-                  child: settingsIsInitialized && vehicleManagerIsInitialized && bluetoothIsInitialized
+                  child: settingsIsInitialized && vehiclesBlocIsInitialized && bluetoothIsInitialized
                       ? child
                       : Container(
                           color: FluentTheme.of(context).brightness == Brightness.dark ? Colors.black : Colors.white,

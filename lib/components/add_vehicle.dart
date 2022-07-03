@@ -25,7 +25,7 @@ class _AddVehicleState extends State<AddVehicle> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VehicleManagerBloc, VehicleManagerState>(
+    return BlocBuilder<VehiclesBloc, VehiclesState>(
       builder: (context, state) {
         return Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,

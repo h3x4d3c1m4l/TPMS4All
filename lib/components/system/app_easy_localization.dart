@@ -13,18 +13,17 @@ class AppEasyLocalization extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<SettingsBloc, SettingsState, String?>(
-      selector: (state) => state.settings.languageCode,
-      builder: (context, languageCode) {
-        // TODO: determine locales from asset files
+    return BlocBuilder<SettingsBloc, SettingsState>(
+      buildWhen: (previous, current) => current.settings.languageCode != previous.settings.languageCode,
+      builder: (context, state) {
         // TODO: check if fallback to English works (e.g. set device language to Afrikaans, then see what happens)
         return EasyLocalization(
-          supportedLocales: const [Locale('en'), Locale('nl')],
+          supportedLocales: state.availableTranslations.map((t) => Locale(t)).toList(),
           path: 'assets/translations',
           saveLocale: false,
           useOnlyLangCode: true,
           fallbackLocale: const Locale('en'),
-          startLocale: languageCode != null ? Locale(languageCode) : null,
+          startLocale: state.settings.languageCode != null ? Locale(state.settings.languageCode!) : null,
           child: child,
         );
       },

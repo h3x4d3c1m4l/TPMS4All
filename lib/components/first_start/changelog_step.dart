@@ -26,7 +26,7 @@ class ChangelogStep extends StatelessWidget {
               child: Text('next'.tr()),
             ),
           ],
-        )
+        ),
       ],
     );
   }

@@ -18,7 +18,7 @@ class GenericTpmsParser extends TpmsMessageParser {
   const GenericTpmsParser();
 
   @override
-  SensorInfo? parse(BleDevice device) {
+  SensorData? parse(BleDevice device) {
     // data starts at the company ID (or at least that's what Wireshark calls it)
     if (device.vendorData.length != 18 ||
         device.vendorData[0] != 0x00 ||
@@ -26,7 +26,7 @@ class GenericTpmsParser extends TpmsMessageParser {
 
     final ByteData byteData = device.vendorData.buffer.asByteData();
 
-    return SensorInfo(
+    return SensorData(
       btAddress: device.btAddress,
       serial: _getSerialFromBluetoothName(device.name) ?? _getSerialFromVendorData(device.vendorData),
       lastSeen: DateTime.now(),

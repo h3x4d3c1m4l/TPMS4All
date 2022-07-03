@@ -68,8 +68,8 @@
                 "subtitle": "App display language",
                 "options": {
                     "default": "Default",
-                    "english": "English",
-                    "dutch": "Dutch"
+                    "en": "English",
+                    "nl": "Dutch"
                 }
             },
             "tire_pressure_unit": {

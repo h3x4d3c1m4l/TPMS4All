@@ -3,4 +3,4 @@
 
 export 'bluetooth/bluetooth_bloc.dart';
 export 'settings/settings_bloc.dart';
-export 'vehicle_manager/vehicle_manager_bloc.dart';
+export 'vehicles/vehicles_bloc.dart';

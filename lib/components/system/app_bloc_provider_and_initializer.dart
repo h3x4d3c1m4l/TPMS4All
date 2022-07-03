@@ -18,31 +18,20 @@ class AppBlocProviderAndInitializer extends StatelessWidget {
       providers: [
         // first initialize Settings and Database
         BlocProvider<SettingsBloc>(
-          create: (context) {
-            final bloc = SettingsBloc();
-            bloc.add(LoadSettingsFromStorageEvent());
-            return bloc;
-          },
+          create: (context) => SettingsBloc()..add(const SettingsEvent.blocCreated()),
         ),
         BlocProvider<BluetoothBloc>(
-          create: (context) {
-            bluetoothBloc.add(const BluetoothEvent.initialize());
-            return bluetoothBloc;
-          },
+          create: (context) => bluetoothBloc..add(const BluetoothEvent.blocCreated()),
         ),
-        BlocProvider<VehicleManagerBloc>(
-          create: (context) {
-            final bloc = VehicleManagerBloc(bluetoothBloc);
-            bloc.add(InitializeFromDatabaseEvent());
-            return bloc;
-          },
+        BlocProvider<VehiclesBloc>(
+          create: (context) => VehiclesBloc(bluetoothBloc)..add(const VehiclesEvent.blocCreated()),
         ),
       ],
       child: BlocListener<BluetoothBloc, BluetoothState>(
         bloc: bluetoothBloc,
         listenWhen: (previousState, state) =>
             !previousState.bluetoothPermissionsGranted && state.bluetoothPermissionsGranted,
-        listener: (contect, state) => bluetoothBloc.add(BluetoothEvent.requestForegroundScan()),
+        listener: (contect, state) => bluetoothBloc.add(BluetoothEvent.foregroundScanRequested()),
         child: child,
       ),
     );
