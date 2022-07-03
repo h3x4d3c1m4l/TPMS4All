@@ -20,13 +20,20 @@ class SettingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title),
-        subtitle: Text(subtitle),
-        trailing: child,
-        isThreeLine: true,
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      child: Row(
+        children: [
+          Icon(icon),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text(title), Text(subtitle)],
+            ),
+          ),
+          const SizedBox(width: 16),
+          child,
+        ],
       ),
     );
   }
