@@ -10,12 +10,12 @@ class SettingCard extends StatelessWidget {
   final Widget child;
 
   const SettingCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.subtitle,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

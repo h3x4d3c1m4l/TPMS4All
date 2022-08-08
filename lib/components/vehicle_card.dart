@@ -15,12 +15,12 @@ class VehicleCard extends StatelessWidget {
   final void Function(UuidValue) switchToAutoSensorSelection;
 
   const VehicleCard({
-    Key? key,
+    super.key,
     required this.vehicle,
     this.initiallyExpanded = false,
     required this.switchToManualSensorSelection,
     required this.switchToAutoSensorSelection,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,9 +6,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:universal_tpms_reader/components/_all.dart';
 
 class AboutPage extends StatefulWidget {
-  const AboutPage({
-    Key? key,
-  }) : super(key: key);
+  const AboutPage({super.key});
 
   @override
   State<AboutPage> createState() => _AboutState();

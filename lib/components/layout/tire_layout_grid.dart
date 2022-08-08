@@ -7,13 +7,12 @@ import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 /// Inspired by: https://codewithandrea.com/articles/flutter-layout-grid-content-sized-items/
 class TireLayoutGrid extends StatelessWidget {
   const TireLayoutGrid({
-    Key? key,
+    super.key,
     required this.crossAxisCount,
     required this.children,
-  })  
+  })
   // we only plan to use this with 1 or 2 columns
-  : assert(crossAxisCount == 1 || crossAxisCount == 2),
-    super(key: key);
+  : assert(crossAxisCount == 1 || crossAxisCount == 2);
   final int crossAxisCount;
   final List<Widget> children;
 

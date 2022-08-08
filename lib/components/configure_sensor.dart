@@ -13,7 +13,7 @@ import 'package:universal_tpms_reader/misc/definitions.dart';
 class ConfigureSensor extends StatefulWidget {
   final Event retryScan;
 
-  const ConfigureSensor({Key? key, required this.retryScan}) : super(key: key);
+  const ConfigureSensor({super.key, required this.retryScan});
 
   @override
   _ConfigureSensorState createState() => _ConfigureSensorState();
@@ -42,11 +42,11 @@ class _ConfigureSensorState extends State<ConfigureSensor> {
                         children: bluetoothState.foundSensors
                             .where((s) => !vehiclesState.vehicles
                                 .any((v) => v.tires.any((t) => t.sensorSerial == s.serial)))
-                            .map((s) => TappableListTile(
+                            .map((s) => ListTile(
                                   leading: const Icon(ms.FluentIcons.bluetooth_20_regular),
                                   title: Text('${s.vendorName} ${s.productName}'),
                                   subtitle: Text(s.serial),
-                                  onTap: () => Routemaster.of(context).pop(s),
+                                  onPressed: () => Routemaster.of(context).pop(s),
                                 ))
                             .toList(),
                       ),

@@ -12,7 +12,7 @@ import 'package:universal_tpms_reader/models/application/_enums.dart';
 import 'package:universal_tpms_reader/models/application/settings.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();

@@ -20,7 +20,7 @@ class FirstStartPage extends StatefulWidget {
   /// A list of known keys, keep this in sync with the step determination code below.
   static const IList<String> knownFirstStartKeys = IListConst(['welcome']);
 
-  const FirstStartPage({Key? key}) : super(key: key);
+  const FirstStartPage({super.key});
 
   @override
   _FirstStartPage createState() => _FirstStartPage();
@@ -55,7 +55,7 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = FluentTheme.of(context);
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         gradient: RadialGradient(
           colors: [
@@ -121,7 +121,7 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
       child: Center(
         child: StepProgressIndicator(
           customStep: (index, color, size) {
-            return Container(
+            return DecoratedBox(
               decoration: BoxDecoration(
                 color: color,
                 borderRadius: BorderRadius.circular(10),

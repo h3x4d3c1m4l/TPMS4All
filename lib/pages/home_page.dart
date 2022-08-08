@@ -15,7 +15,7 @@ import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:uuid/uuid.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();

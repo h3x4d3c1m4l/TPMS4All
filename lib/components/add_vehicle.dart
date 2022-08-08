@@ -12,7 +12,7 @@ import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:uuid/uuid.dart';
 
 class AddVehicle extends StatefulWidget {
-  const AddVehicle({Key? key}) : super(key: key);
+  const AddVehicle({super.key});
 
   @override
   _AddVehicleState createState() => _AddVehicleState();

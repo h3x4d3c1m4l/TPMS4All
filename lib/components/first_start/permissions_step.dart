@@ -10,7 +10,7 @@ import 'package:universal_tpms_reader/blocs/_all.dart';
 class PermissionsStep extends StatefulWidget {
   final VoidCallback onNext;
 
-  const PermissionsStep({Key? key, required this.onNext}) : super(key: key);
+  const PermissionsStep({super.key, required this.onNext});
 
   @override
   State<PermissionsStep> createState() => _PermissionsStepState();

@@ -9,7 +9,7 @@ import 'package:universal_tpms_reader/blocs/_all.dart';
 class AppEasyLocalization extends StatelessWidget {
   final Widget child;
 
-  const AppEasyLocalization({Key? key, required this.child}) : super(key: key);
+  const AppEasyLocalization({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

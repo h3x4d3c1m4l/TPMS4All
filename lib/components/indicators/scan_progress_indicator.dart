@@ -10,7 +10,7 @@ import 'package:universal_tpms_reader/models/application/_all.dart';
 class ScanProgressIndicator extends StatelessWidget {
   final VoidCallback retryScan;
 
-  const ScanProgressIndicator({Key? key, required this.retryScan}) : super(key: key);
+  const ScanProgressIndicator({super.key, required this.retryScan});
 
   @override
   Widget build(BuildContext context) {

@@ -8,11 +8,7 @@ class LedIndicator extends StatelessWidget {
   final LedColor? color;
   final double? size;
 
-  const LedIndicator({
-    Key? key,
-    required this.color,
-    this.size,
-  }) : super(key: key);
+  const LedIndicator({super.key, required this.color, this.size});
 
   @override
   Widget build(BuildContext context) {

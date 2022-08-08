@@ -10,7 +10,13 @@ class Glow extends StatelessWidget {
   final Widget child;
   final bool repeat;
 
-  const Glow({Key? key, required this.glowRadius, this.glowColor, required this.child, this.repeat = true}) : super(key: key);
+  const Glow({
+    super.key,
+    required this.glowRadius,
+    this.glowColor,
+    required this.child,
+    this.repeat = true,
+  });
 
   @override
   Widget build(BuildContext context) {

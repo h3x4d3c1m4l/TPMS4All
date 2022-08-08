@@ -20,12 +20,12 @@ class TireInfo extends StatelessWidget {
   final VoidCallback switchToAutoSensorSelection;
 
   const TireInfo({
-    Key? key,
+    super.key,
     required this.tire,
     required this.ignoreTireLayout,
     required this.switchToManualSensorSelection,
     required this.switchToAutoSensorSelection,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

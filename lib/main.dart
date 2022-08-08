@@ -43,7 +43,7 @@ Future<void> main() async {
 }
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class App extends StatelessWidget {
         return BlocBuilder<SettingsBloc, SettingsState>(
           builder: (context, settingsState) => FluentApp.router(
             // TODO: this looks good on Android 11, check on 12 and older, also check on iOS/iPadOS
-            builder: (context, child) => Container(
+            builder: (context, child) => ColoredBox(
               color: FluentTheme.of(context).micaBackgroundColor,
               child: SafeArea(child: child!),
             ),

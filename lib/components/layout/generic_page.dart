@@ -8,7 +8,7 @@ class GenericPage extends StatelessWidget {
   final String title;
   final Widget content;
 
-  const GenericPage({Key? key, required this.title, required this.content}) : super(key: key);
+  const GenericPage({super.key, required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {

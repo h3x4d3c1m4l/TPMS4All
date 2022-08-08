@@ -11,13 +11,13 @@ class CustomBottomSheet extends StatelessWidget {
   final String description;
 
   const CustomBottomSheet({
-    Key? key,
+    super.key,
     required this.description,
     this.initialChildSize = 0.5,
     this.minChildSize = 0.25,
     this.maxChildSize = 0.85,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

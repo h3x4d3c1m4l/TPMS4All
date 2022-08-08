@@ -5,7 +5,6 @@
 
 import 'dart:typed_data';
 
-import 'package:convert/convert.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:quick_blue/quick_blue.dart';
