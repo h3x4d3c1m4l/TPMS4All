@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:dart_extensions/dart_extensions.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:isar/isar.dart';
@@ -51,10 +53,9 @@ class VehiclesBloc extends Bloc<VehiclesEvent, VehiclesState> {
     final dir = await getApplicationSupportDirectory();
 
     _isar = await Isar.open(
+      _isarSchemas.unlockLazy,
       name: _databaseName,
-      schemas: _isarSchemas.unlockLazy,
       directory: dir.path,
-      inspector: true,
     );
 
     emit(state.copyWith(isInitialized: true, vehicles: await _getVehiclesFromIsar()));

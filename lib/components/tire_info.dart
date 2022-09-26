@@ -164,8 +164,8 @@ class TireInfo extends StatelessWidget {
     );
   }
 
-  VerticalDirection getVerticalDirection(TireLocation? tireLocation) {
-    if (ignoreTireLayout || tireLocation == null) {
+  VerticalDirection getVerticalDirection(TireLocation tireLocation) {
+    if (ignoreTireLayout) {
       return VerticalDirection.down;
     }
 
@@ -179,11 +179,12 @@ class TireInfo extends StatelessWidget {
       case TireLocation.rearLeft:
       case TireLocation.rearRight:
       case TireLocation.rearCenter:
+      case TireLocation.unknown:
         return VerticalDirection.up;
     }
   }
 
-  ui.TextDirection getTextDirection(TireLocation? tireLocation) {
+  ui.TextDirection getTextDirection(TireLocation tireLocation) {
     if (ignoreTireLayout || tireLocation == null) {
       return ui.TextDirection.ltr;
     }
@@ -199,12 +200,13 @@ class TireInfo extends StatelessWidget {
       case TireLocation.frontCenter:
       case TireLocation.rear:
       case TireLocation.rearCenter:
+      case TireLocation.unknown:
         return ui.TextDirection.ltr;
     }
   }
 
-  AlignmentGeometry getIndicatorAlignment(TireLocation? tireLocation) {
-    if (ignoreTireLayout || tireLocation == null) {
+  AlignmentGeometry getIndicatorAlignment(TireLocation tireLocation) {
+    if (ignoreTireLayout) {
       return Alignment.center;
     }
 
@@ -221,11 +223,12 @@ class TireInfo extends StatelessWidget {
       case TireLocation.frontCenter:
       case TireLocation.rear:
       case TireLocation.rearCenter:
+      case TireLocation.unknown:
         return Alignment.center;
     }
   }
 
-  CrossAxisAlignment getColumnCrossAxisAlignment(TireLocation? tireLocation) {
+  CrossAxisAlignment getColumnCrossAxisAlignment(TireLocation tireLocation) {
     if (ignoreTireLayout || tireLocation == null) {
       return CrossAxisAlignment.start;
     }
@@ -241,6 +244,7 @@ class TireInfo extends StatelessWidget {
       case TireLocation.frontCenter:
       case TireLocation.rear:
       case TireLocation.rearCenter:
+      case TireLocation.unknown:
         return CrossAxisAlignment.start;
     }
   }

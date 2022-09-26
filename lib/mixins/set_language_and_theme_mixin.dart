@@ -11,10 +11,10 @@ import 'package:universal_tpms_reader/models/application/_all.dart';
 mixin SetLanguageAndThemeMixin<T extends StatefulWidget> on State<T> {
   late SettingsBloc settingsBloc;
 
-  List<ComboboxItem<String?>> getLanguageOptions() {
-    return <ComboboxItem<String?>>[
-      ComboboxItem<String>(child: Text('settings.settings.language.options.default'.tr())),
-      ...settingsBloc.state.availableTranslations.map((languageCode) => ComboboxItem<String>(
+  List<ComboBoxItem<String?>> getLanguageOptions() {
+    return <ComboBoxItem<String?>>[
+      ComboBoxItem<String>(child: Text('settings.settings.language.options.default'.tr())),
+      ...settingsBloc.state.availableTranslations.map((languageCode) => ComboBoxItem<String>(
           value: languageCode, child: Text('settings.settings.language.options.$languageCode'.tr()))),
     ].lock.unlockView;
   }
@@ -48,11 +48,11 @@ mixin SetLanguageAndThemeMixin<T extends StatefulWidget> on State<T> {
     }
   }
 
-  static List<ComboboxItem<AppTheme>> getAppThemeOptions() {
-    return <ComboboxItem<AppTheme>>[
-      ComboboxItem<AppTheme>(value: AppTheme.byDevice, child: Text('settings.settings.theme.options.default'.tr())),
-      ComboboxItem<AppTheme>(value: AppTheme.light, child: Text('settings.settings.theme.options.light'.tr())),
-      ComboboxItem<AppTheme>(value: AppTheme.dark, child: Text('settings.settings.theme.options.dark'.tr())),
+  static List<ComboBoxItem<AppTheme>> getAppThemeOptions() {
+    return <ComboBoxItem<AppTheme>>[
+      ComboBoxItem<AppTheme>(value: AppTheme.byDevice, child: Text('settings.settings.theme.options.default'.tr())),
+      ComboBoxItem<AppTheme>(value: AppTheme.light, child: Text('settings.settings.theme.options.light'.tr())),
+      ComboBoxItem<AppTheme>(value: AppTheme.dark, child: Text('settings.settings.theme.options.dark'.tr())),
     ].lock.unlockView;
   }
 

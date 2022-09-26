@@ -58,7 +58,7 @@ class _AddVehicleState extends State<AddVehicle> {
                     // vehicle type
                     Text('home.add_vehicle.type'.tr()),
                     const SizedBox(height: 10),
-                    Combobox<VehicleType>(
+                    ComboBox<VehicleType>(
                       isExpanded: true,
                       items: getTirePressureUnitOptions(),
                       value: _selectedVehicleType,
@@ -83,13 +83,13 @@ class _AddVehicleState extends State<AddVehicle> {
     );
   }
 
-  static List<ComboboxItem<VehicleType>> getTirePressureUnitOptions() {
-    return <ComboboxItem<VehicleType>>[
-      ComboboxItem<VehicleType>(value: VehicleType.car, child: Text('home.add_vehicle.type_option_car'.tr())),
-      ComboboxItem<VehicleType>(
+  static List<ComboBoxItem<VehicleType>> getTirePressureUnitOptions() {
+    return <ComboBoxItem<VehicleType>>[
+      ComboBoxItem<VehicleType>(value: VehicleType.car, child: Text('home.add_vehicle.type_option_car'.tr())),
+      ComboBoxItem<VehicleType>(
           value: VehicleType.motorcycle,
           child: Text('home.add_vehicle.type_option_motorcycle'.tr())),
-      //ComboboxItem<VehicleType>(child: Text('bar'), value: VehicleType.other), // TODO
+      //ComboBoxItem<VehicleType>(child: Text('bar'), value: VehicleType.other), // TODO
     ].lock.unlockView;
   }
 

@@ -81,7 +81,7 @@ class App extends StatelessWidget {
             debugShowCheckedModeBanner: false,
 
             // easy_localization
-            localizationsDelegates: [...context.localizationDelegates, const TemporaryFluentLocalizationDelegate()],
+            localizationsDelegates: [...context.localizationDelegates, FluentLocalizations.delegate],
             supportedLocales: context.supportedLocales,
             locale: context.locale,
           ),

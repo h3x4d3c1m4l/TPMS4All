@@ -7,25 +7,32 @@ part of 'vehicles_bloc.dart';
 /// vehicle_manager_bloc.dart more manageable in terms of line count.
 extension VehiclesBlocDb on VehiclesBloc {
   FutureOr<void> _onNewOrUpdatedVehicleEmitted(_VehiclesNewOrUpdatedVehicleEmitted event, Emitter<VehiclesState> emit) async {
-    await _isar.writeTxn((isar) async {
-      final DbVehicle? dbVehicle = await isar.vehicle.filter().uuidEqualTo(event.vehicle.uuid).findFirst();
+    await _isar.writeTxn(() async {
+      final DbVehicle? dbVehicle = await _isar.vehicle.filter().uuidEqualTo(event.vehicle.uuid.uuid).findFirst();
       if (dbVehicle == null) {
-        // insert
-        final dbVehicle = DbVehicle()
-          ..uuid = event.vehicle.uuid
+        // insert vehicle
+        final DbVehicle newVehicle = DbVehicle()
+          ..uuid = event.vehicle.uuid.uuid
           ..name = event.vehicle.name
           ..type = event.vehicle.type
           ..added = event.vehicle.added
-          ..color = event.vehicle.color
-          ..tires.addAll(
-            event.vehicle.tires.map(
+          ..color = event.vehicle.color.value;
+        await _isar.vehicle.put(newVehicle);
+
+        // insert tires
+        final List<DbTire> newTires = event.vehicle.tires
+            .map(
               (t) => DbTire()
-                ..uuid = t.uuid
+                ..uuid = t.uuid.uuid
                 ..locationOnVehicle = t.locationOnVehicle
                 ..sensorAutoPair = t.sensorAutoPair,
-            ),
-          );
-        await isar.vehicle.put(dbVehicle, saveLinks: true);
+            )
+            .toList();
+        await _isar.tire.putAll(newTires);
+        
+        // create link between vehicle and tires
+        newVehicle.tires.addAll(newTires);
+        await newVehicle.tires.save();
       } else {
         // update
         await dbVehicle.tires.load();
@@ -34,12 +41,11 @@ extension VehiclesBlocDb on VehiclesBloc {
         dbVehicle
           ..name = event.vehicle.name
           ..type = event.vehicle.type
-          ..color = event.vehicle.color;
+          ..color = event.vehicle.color.value;
 
         // tires
-        final List<DbTire> updatedTires = dbVehicle.tires.toList();
-        for (final DbTire dbTire in updatedTires) {
-          final Tire tire = event.vehicle.tires.firstWhere((t) => t.uuid == dbTire.uuid);
+        for (final DbTire dbTire in dbVehicle.tires) {
+          final Tire tire = event.vehicle.tires.firstWhere((t) => t.uuid.uuid == dbTire.uuid);
 
           dbTire
             ..sensorBtAddress = tire.sensorBtAddress
@@ -59,21 +65,21 @@ extension VehiclesBlocDb on VehiclesBloc {
             ..criticalAtTemperatureCelcius = tire.criticalAtTemperatureCelcius;
         }
 
+        //await dbVehicle.tires.save(); // really needed?
+        await _isar.vehicle.put(dbVehicle);
         await dbVehicle.tires.save();
-        await isar.vehicle.put(dbVehicle);
-        await isar.tire.putAll(updatedTires);
       }
     });
   }
 
   FutureOr<void> _onVehicleDeleteEmitted(
       _VehiclesVehicleDeleteEmitted event, Emitter<VehiclesState> emit) async {
-    await _isar.writeTxn((isar) async {
-      final DbVehicle dbVehicle = (await isar.vehicle.filter().uuidEqualTo(event.vehicleUuid).findFirst())!;
+    await _isar.writeTxn(() async {
+      final DbVehicle dbVehicle = (await _isar.vehicle.filter().uuidEqualTo(event.vehicleUuid.uuid).findFirst())!;
       await dbVehicle.tires.load();
 
-      await isar.vehicle.delete(dbVehicle.id!);
-      await isar.tire.deleteAll(dbVehicle.tires.map((t) => t.id!).toList());
+      await _isar.vehicle.delete(dbVehicle.id!);
+      await _isar.tire.deleteAll(dbVehicle.tires.map((t) => t.id!).toList());
     });
   }
 
@@ -86,17 +92,17 @@ extension VehiclesBlocDb on VehiclesBloc {
     return dbVehicles
         .map(
           (v) => Vehicle(
-            uuid: v.uuid,
+            uuid: UuidValue(v.uuid),
             type: v.type,
             name: v.name,
             added: v.added,
-            color: v.color,
+            color: Color(v.color),
             tires: v.tires
                 .map(
                   (t) => Tire(
-                    uuid: t.uuid,
+                    uuid: UuidValue(t.uuid),
                     locationOnVehicle: t.locationOnVehicle,
-                    sensorBtAddress: t.sensorBtAddress,
+                    sensorBtAddress: t.sensorBtAddress != null ? Uint8List.fromList(t.sensorBtAddress!) : null,
                     sensorSerial: t.sensorSerial,
                     sensorVendorName: t.sensorVendorName,
                     sensorProductName: t.sensorProductName,

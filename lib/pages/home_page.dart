@@ -70,10 +70,12 @@ class _HomePageState extends State<HomePage> {
         items: [
           PaneItem(
             icon: const Icon(FluentIcons.home),
+            body: _homepage,
             title: Text('home.title'.tr()),
           ),
           PaneItemAction(
             icon: const Icon(FluentIcons.add),
+            body: const SizedBox(),
             title: Text('home.add_vehicle.title'.tr()),
             onTap: () {
               setState(() {
@@ -85,6 +87,7 @@ class _HomePageState extends State<HomePage> {
           PaneItemSeparator(),
           PaneItemAction(
             icon: const Icon(FluentIcons.settings),
+            body: const SizedBox(),
             title: Text('settings.title'.tr()),
             onTap: () {
               Routemaster.of(context).push('/settings');
@@ -92,6 +95,7 @@ class _HomePageState extends State<HomePage> {
           ),
           PaneItemAction(
             icon: const Icon(FluentIcons.info),
+            body: const SizedBox(),
             title: Text('about.title'.tr()),
             onTap: () {
               Routemaster.of(context).push('/about');
@@ -100,60 +104,63 @@ class _HomePageState extends State<HomePage> {
         ],
         selected: 0,
       ),
-      content: Container(
-        margin: const EdgeInsets.all(10),
-        child: BlocBuilder<VehiclesBloc, VehiclesState>(
-          builder: (context, state) {
-            return ResponsiveGridList(
-              desiredItemWidth: 300,
-              minSpacing: 10,
-              children: state.vehicles.map(
-                (v) {
-                  return AnimatedCrossFade(
-                    // edit mode
-                    firstChild: SettingCard(
-                      icon: v.type == VehicleType.car
-                          ? ms.FluentIcons.vehicle_car_profile_ltr_16_regular
-                          : v.type == VehicleType.motorcycle
-                              ? FluentIcons.cycling
-                              : FluentIcons.unknown,
-                      title: v.name,
-                      subtitle: 'home.edit_mode.added_on'.tr() + DateFormat.yMd().format(v.added),
-                      child: Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(FluentIcons.edit, color: Colors.warningPrimaryColor),
-                            onPressed: () => renameVehicle(context, v),
-                          ),
-                          IconButton(
-                            icon: const Icon(FluentIcons.delete, color: Colors.errorPrimaryColor),
-                            onPressed: () => deleteVehicle(context, v),
-                          )
-                        ],
-                      ),
-                    ),
+    );
+  }
 
-                    // normal mode
-                    secondChild: VehicleCard(
-                      key: ValueKey(v.uuid),
-                      vehicle: v,
-                      initiallyExpanded: state.vehicles.length == 1,
-                      switchToManualSensorSelection: (tireUuid) => configureSensorManually(context, tireUuid),
-                      switchToAutoSensorSelection: (tireUuid) => configureSensorAutomatically(tireUuid),
+  Widget get _homepage {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      child: BlocBuilder<VehiclesBloc, VehiclesState>(
+        builder: (context, state) {
+          return ResponsiveGridList(
+            desiredItemWidth: 300,
+            minSpacing: 10,
+            children: state.vehicles.map(
+              (v) {
+                return AnimatedCrossFade(
+                  // edit mode
+                  firstChild: SettingCard(
+                    icon: v.type == VehicleType.car
+                        ? ms.FluentIcons.vehicle_car_profile_ltr_16_regular
+                        : v.type == VehicleType.motorcycle
+                            ? FluentIcons.cycling
+                            : FluentIcons.unknown,
+                    title: v.name,
+                    subtitle: 'home.edit_mode.added_on'.tr() + DateFormat.yMd().format(v.added),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(FluentIcons.edit, color: Colors.warningPrimaryColor),
+                          onPressed: () => renameVehicle(context, v),
+                        ),
+                        IconButton(
+                          icon: const Icon(FluentIcons.delete, color: Colors.errorPrimaryColor),
+                          onPressed: () => deleteVehicle(context, v),
+                        )
+                      ],
                     ),
+                  ),
 
-                    // animation settings
-                    duration: const Duration(milliseconds: 500),
-                    crossFadeState: vehicleEditModeEnabled ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-                    firstCurve: Curves.elasticInOut,
-                    secondCurve: Curves.elasticInOut,
-                    sizeCurve: Curves.elasticInOut,
-                  );
-                },
-              ).toList(),
-            );
-          },
-        ),
+                  // normal mode
+                  secondChild: VehicleCard(
+                    key: ValueKey(v.uuid),
+                    vehicle: v,
+                    initiallyExpanded: state.vehicles.length == 1,
+                    switchToManualSensorSelection: (tireUuid) => configureSensorManually(context, tireUuid),
+                    switchToAutoSensorSelection: (tireUuid) => configureSensorAutomatically(tireUuid),
+                  ),
+
+                  // animation settings
+                  duration: const Duration(milliseconds: 500),
+                  crossFadeState: vehicleEditModeEnabled ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                  firstCurve: Curves.elasticInOut,
+                  secondCurve: Curves.elasticInOut,
+                  sizeCurve: Curves.elasticInOut,
+                );
+              },
+            ).toList(),
+          );
+        },
       ),
     );
   }

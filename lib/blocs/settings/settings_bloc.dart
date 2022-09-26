@@ -57,10 +57,10 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     return Settings(
       languageCode: _sharedPreferences.getString('languageCode') ?? defaultSettings.languageCode,
       tirePressureUnit: TirePressureUnit
-          .values[_sharedPreferences.getInt('tirePressureUnit') ?? defaultSettings.tirePressureUnit.index],
+          .values[_sharedPreferences.getInt('tirePressureUnit') ?? defaultSettings.tirePressureUnit.value],
       temperatureUnit:
-          TemperatureUnit.values[_sharedPreferences.getInt('temperatureUnit') ?? defaultSettings.temperatureUnit.index],
-      appTheme: AppTheme.values[_sharedPreferences.getInt('appTheme') ?? defaultSettings.appTheme.index],
+          TemperatureUnit.values[_sharedPreferences.getInt('temperatureUnit') ?? defaultSettings.temperatureUnit.value],
+      appTheme: AppTheme.values[_sharedPreferences.getInt('appTheme') ?? defaultSettings.appTheme.value],
       firstStartKeys: _sharedPreferences.getStringList('firstStartKeys')?.lock ?? const IListConst([]),
       firstStartBuild: _sharedPreferences.getInt('firstStartBuild') ?? defaultSettings.firstStartBuild,
       firstStartVersion: _sharedPreferences.getString('firstStartVersion') ?? defaultSettings.firstStartVersion,
@@ -73,9 +73,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } else {
       await _sharedPreferences.remove('languageCode');
     }
-    await _sharedPreferences.setInt('tirePressureUnit', settings.tirePressureUnit.index);
-    await _sharedPreferences.setInt('temperatureUnit', settings.temperatureUnit.index);
-    await _sharedPreferences.setInt('appTheme', settings.appTheme.index);
+    await _sharedPreferences.setInt('tirePressureUnit', settings.tirePressureUnit.value);
+    await _sharedPreferences.setInt('temperatureUnit', settings.temperatureUnit.value);
+    await _sharedPreferences.setInt('appTheme', settings.appTheme.value);
     await _sharedPreferences.setStringList('firstStartKeys', settings.firstStartKeys.unlockView);
     await _sharedPreferences.setInt('firstStartBuild', settings.firstStartBuild);
     await _sharedPreferences.setString('firstStartVersion', settings.firstStartVersion);

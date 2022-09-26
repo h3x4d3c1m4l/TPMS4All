@@ -116,6 +116,10 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
   }
 
   Widget _getTopWidget(BuildContext context) {
+    if (_steps.length == 1) {
+      return const SizedBox();
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Center(
@@ -196,7 +200,7 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
                 controller: _themeFlyoutController,
                 placement: FlyoutPlacement.end,
                 content: (BuildContext context) {
-                  final List<ComboboxItem<AppTheme>> options = SetLanguageAndThemeMixin.getAppThemeOptions();
+                  final List<ComboBoxItem<AppTheme>> options = SetLanguageAndThemeMixin.getAppThemeOptions();
                   return FlyoutContent(
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
@@ -231,7 +235,7 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
                 controller: _languageFlyoutController,
                 placement: FlyoutPlacement.end,
                 content: (BuildContext context) {
-                  final List<ComboboxItem<String?>> options = getLanguageOptions();
+                  final List<ComboBoxItem<String?>> options = getLanguageOptions();
                   return FlyoutContent(
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),

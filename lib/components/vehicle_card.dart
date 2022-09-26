@@ -50,7 +50,7 @@ class VehicleCard extends StatelessWidget {
       header: Row(
         children: [
           Text(vehicle.name),
-          if (vehicle.type != null) const SizedBox(width: 5),
+          if (vehicle.type == VehicleType.unknown) const SizedBox(width: 5),
           if (vehicle.type == VehicleType.car) const Icon(ms.FluentIcons.vehicle_car_profile_ltr_16_regular),
           if (vehicle.type == VehicleType.motorcycle) const Icon(FluentIcons.cycling),
         ],
@@ -82,7 +82,7 @@ class VehicleCard extends StatelessWidget {
           TireLayoutGrid(
             crossAxisCount: 2,
             children: vehicle.tires
-                .sort((a, b) => a.locationOnVehicle!.index.compareTo(b.locationOnVehicle!.index))
+                .sort((a, b) => a.locationOnVehicle.index.compareTo(b.locationOnVehicle.index))
                 .map(
                   (t) => TireInfo(
                     tire: t,
