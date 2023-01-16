@@ -42,9 +42,8 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   FutureOr<void> _onBlocCreated(_BluetoothBlocCreated event, Emitter<BluetoothState> emit) async {
     emit(state.copyWith(permissionStatusIsBeingUpdated: true));
 
-    //_bluetooth = ReactiveBle(); // hardware implementation, seems very stable
+    _bluetooth = ReactiveBle(); // hardware implementation, seems very stable
     //_bluetooth = FakeBle(); // send fake BLE reports (but data is actually in the same format as real sensors)
-    _bluetooth = QuickBlueBle(); // hardware implementation, but not stable yet
 
     // permissions are slightly different per platform and not applicable to desktop platforms
     if (Platform.isAndroid) {
@@ -92,7 +91,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     PermissionStatus location, bluetooth;
 
     final AndroidDeviceInfo deviceInfo = GetIt.I.get<BaseDeviceInfo>() as AndroidDeviceInfo;
-    if (deviceInfo.version.sdkInt! < 31) {
+    if (deviceInfo.version.sdkInt < 31) {
       // <= Android 11
       location = await Permission.locationWhenInUse.request();
       bluetooth = await Permission.bluetooth.request();
