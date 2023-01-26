@@ -1,7 +1,6 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart' as ms;
@@ -188,83 +187,93 @@ class _FirstStartPage extends State<FirstStartPage> with TickerProviderStateMixi
   }
 
   Widget _getBottomWidget(BuildContext context) {
-    return BlocSelector<SettingsBloc, SettingsState, Settings>(
-      selector: (state) => state.settings,
-      builder: (context, settings) {
-        return Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              // theme selector
-              Flyout(
-                controller: _themeFlyoutController,
-                placement: FlyoutPlacement.end,
-                content: (BuildContext context) {
-                  final List<ComboBoxItem<AppTheme>> options = SetLanguageAndThemeMixin.getAppThemeOptions();
-                  return FlyoutContent(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: List.generate(options.length, (index) {
-                          return [
-                            RadioButton(
-                              checked: options.indexWhere((o) => o.value == settings.appTheme) == index,
-                              onChanged: (value) {
-                                applyAndStoreAppTheme(options[index].value!);
-                                _themeFlyoutController.close();
-                              },
-                              content: options[index].child,
-                            ),
-                            if (index < (options.length - 1)) const SizedBox(height: 15),
-                          ];
-                        }).expand((l) => l).toList(),
-                      ),
-                    ),
-                  );
-                },
-                child: IconButton(
-                  icon: const Icon(FluentIcons.color, size: 24.0),
-                  onPressed: _themeFlyoutController.open,
-                ),
-              ),
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FlyoutTarget(
+            controller: _themeFlyoutController,
+            child: IconButton(
+              icon: const Icon(FluentIcons.color, size: 24.0),
+              onPressed: _openThemeSelector,
+            ),
+          ),
+          FlyoutTarget(
+            controller: _languageFlyoutController,
+            child: IconButton(
+              icon: const Icon(FluentIcons.locale_language, size: 24.0),
+              onPressed: _openLanguageSelector,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-              // language selector
-              Flyout(
-                controller: _languageFlyoutController,
-                placement: FlyoutPlacement.end,
-                content: (BuildContext context) {
-                  final List<ComboBoxItem<String?>> options = getLanguageOptions();
-                  return FlyoutContent(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: List.generate(options.length, (index) {
-                          return [
-                            RadioButton(
-                              checked: options.indexWhere((o) => o.value == settings.languageCode) == index,
-                              onChanged: (value) {
-                                applyAndStoreLanguage(options[index].value);
-                                _languageFlyoutController.close();
-                              },
-                              content: options[index].child,
-                            ),
-                            if (index != (options.length - 1)) const SizedBox(height: 15),
-                          ];
-                        }).expand((l) => l).toList(),
+  void _openThemeSelector() {
+    final List<ComboBoxItem<AppTheme>> options = SetLanguageAndThemeMixin.getAppThemeOptions();
+    _themeFlyoutController.showFlyout(
+      builder: (BuildContext context) {
+        return FlyoutContent(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: BlocSelector<SettingsBloc, SettingsState, Settings>(
+              selector: (state) => state.settings,
+              builder: (context, settings) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(options.length, (index) {
+                    return [
+                      RadioButton(
+                        checked: options.indexWhere((o) => o.value == settings.appTheme) == index,
+                        onChanged: (value) {
+                          applyAndStoreAppTheme(options[index].value!);
+                          //_themeFlyoutController;
+                        },
+                        content: options[index].child,
                       ),
-                    ),
-                  );
-                },
-                child: IconButton(
-                  icon: const Icon(FluentIcons.locale_language, size: 24.0),
-                  onPressed: _languageFlyoutController.open,
-                ),
-              ),
-            ],
+                      if (index < (options.length - 1)) const SizedBox(height: 15),
+                    ];
+                  }).expand((l) => l).toList(),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _openLanguageSelector() {
+    final List<ComboBoxItem<String?>> options = getLanguageOptions();
+    _languageFlyoutController.showFlyout(
+      builder: (BuildContext context) {
+        return FlyoutContent(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: BlocSelector<SettingsBloc, SettingsState, Settings>(
+              selector: (state) => state.settings,
+              builder: (context, settings) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: List.generate(options.length, (index) {
+                    return [
+                      RadioButton(
+                        checked: options.indexWhere((o) => o.value == settings.languageCode) == index,
+                        onChanged: (value) {
+                          applyAndStoreLanguage(options[index].value);
+                          //_languageFlyoutController.close();
+                        },
+                        content: options[index].child,
+                      ),
+                      if (index != (options.length - 1)) const SizedBox(height: 15),
+                    ];
+                  }).expand((l) => l).toList(),
+                );
+              },
+            ),
           ),
         );
       },

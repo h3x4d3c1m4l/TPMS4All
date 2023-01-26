@@ -8,7 +8,7 @@ import Foundation
 import device_info_plus
 import isar_flutter_libs
 import package_info_plus
-import path_provider_macos
+import path_provider_foundation
 import shared_preferences_foundation
 import system_theme
 import wakelock_macos

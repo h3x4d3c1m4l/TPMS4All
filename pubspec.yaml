@@ -13,14 +13,14 @@ dependencies:
   avatar_glow: 2.0.2
   bloc_concurrency: 0.2.0
   change: 0.5.0
-  collection: 1.16.0
+  collection: 1.17.0
   convert: 3.1.1
   dart_extensions: 2.2.0
   device_info_plus: 8.0.0
   dotted_border: 2.0.0+3
   easy_localization: 3.0.1
   fast_immutable_collections: 8.1.1
-  fluent_ui: 4.1.4
+  fluent_ui: 4.2.0
   fluentui_system_icons: 1.1.190
   flutter:
     sdk: flutter
@@ -39,12 +39,12 @@ dependencies:
   morphable_shape: 1.6.4
   package_info_plus: 3.0.2
   path: 1.8.2
-  path_provider: 2.0.11
+  path_provider: 2.0.12
   permission_handler: 10.2.0
   responsive_grid: 2.1.0
   restart_app: 1.1.1+1
   routemaster: 1.0.1
-  shared_preferences: 2.0.16
+  shared_preferences: 2.0.17
   step_progress_indicator: 1.0.2
   system_theme: 2.1.0
   uuid: 3.0.7
@@ -52,7 +52,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: 2.3.3
-  dart_code_metrics: 5.4.0
+  dart_code_metrics: 5.5.0
   flutter_test:
     sdk: flutter
   freezed: 2.3.2
