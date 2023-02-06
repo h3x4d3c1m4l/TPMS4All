@@ -114,7 +114,6 @@ class VehiclesBloc extends Bloc<VehiclesEvent, VehiclesState> {
             // sensor is unknown, but we might be able to auto pair it with a tire
             (tire.sensorSerial == null &&
                 tire.sensorAutoPair &&
-                tire.locationOnVehicle != null &&
                 tire.locationOnVehicle == sensorData.suggestsLocationOnVehicle);
   }
 }

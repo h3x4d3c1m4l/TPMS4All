@@ -185,7 +185,7 @@ class TireInfo extends StatelessWidget {
   }
 
   ui.TextDirection getTextDirection(TireLocation tireLocation) {
-    if (ignoreTireLayout || tireLocation == null) {
+    if (ignoreTireLayout) {
       return ui.TextDirection.ltr;
     }
 
@@ -229,7 +229,7 @@ class TireInfo extends StatelessWidget {
   }
 
   CrossAxisAlignment getColumnCrossAxisAlignment(TireLocation tireLocation) {
-    if (ignoreTireLayout || tireLocation == null) {
+    if (ignoreTireLayout) {
       return CrossAxisAlignment.start;
     }
 
