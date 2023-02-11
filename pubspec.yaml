@@ -16,15 +16,15 @@ dependencies:
   collection: 1.17.0
   convert: 3.1.1
   dart_extensions: 2.2.0
-  device_info_plus: 8.0.0
+  device_info_plus: 8.1.0
   dotted_border: 2.0.0+3
   easy_localization: 3.0.1
   fast_immutable_collections: 8.2.0
-  fluent_ui: 4.2.0
+  fluent_ui: 4.3.0
   fluentui_system_icons: 1.1.190
   flutter:
     sdk: flutter
-  flutter_bloc: 8.1.1
+  flutter_bloc: 8.1.2
   flutter_colorpicker: 1.0.3
   flutter_layout_grid: 2.0.1
   flutter_native_splash: 2.2.17
@@ -37,7 +37,7 @@ dependencies:
   isar_flutter_libs: 3.0.5
   lottie: 2.2.0
   morphable_shape: 1.6.5
-  package_info_plus: 3.0.2
+  package_info_plus: 3.0.3
   path: 1.8.2
   path_provider: 2.0.12
   permission_handler: 10.2.0
