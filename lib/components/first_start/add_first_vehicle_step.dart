@@ -7,7 +7,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 class AddFirstVehicleStep extends StatelessWidget {
   final VoidCallback onNext;
 
-  const AddFirstVehicleStep({Key? key, required this.onNext}) : super(key: key);
+  const AddFirstVehicleStep({super.key, required this.onNext});
 
   @override
   Widget build(BuildContext context) {

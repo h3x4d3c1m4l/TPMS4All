@@ -7,7 +7,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 class SettingsStep extends StatelessWidget {
   final VoidCallback onNext;
 
-  const SettingsStep({Key? key, required this.onNext}) : super(key: key);
+  const SettingsStep({super.key, required this.onNext});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SettingsStep extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButton(
+            HyperlinkButton(
               child: Text('cancel'.tr()),
               onPressed: () => {},
             ),

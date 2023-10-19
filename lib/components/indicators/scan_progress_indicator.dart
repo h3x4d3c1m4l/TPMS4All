@@ -10,7 +10,7 @@ import 'package:universal_tpms_reader/models/application/_all.dart';
 class ScanProgressIndicator extends StatelessWidget {
   final VoidCallback retryScan;
 
-  const ScanProgressIndicator({Key? key, required this.retryScan}) : super(key: key);
+  const ScanProgressIndicator({super.key, required this.retryScan});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class ScanProgressIndicator extends StatelessWidget {
                 state.foundSensors.isEmpty) ...[
               Text('home.configure_sensor.no_results'.tr()),
               const SizedBox(height: 20),
-              TextButton(
+              HyperlinkButton(
                 onPressed: retryScan,
                 child: Text('home.configure_sensor.try_again'.tr()),
               ),

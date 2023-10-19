@@ -1,24 +1,22 @@
 // Copyright 2022 Sander in 't Hout.
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
-import 'dart:typed_data';
-
 import 'package:isar/isar.dart';
+import 'package:universal_tpms_reader/misc/string_hash.dart';
 import 'package:universal_tpms_reader/models/application/_enums.dart';
-import 'package:uuid/uuid.dart';
 
 part 'db_tire.g.dart';
 
 @Collection(accessor: 'tire')
 class DbTire {
-  int? id;
-  @UuidConverter()
-  late UuidValue uuid;
+  late String uuid;
 
-  @TireLocationConverter()
-  late TireLocation? locationOnVehicle;
+  Id get isarId => fastHash(uuid);
 
-  Uint8List? sensorBtAddress;
+  @enumerated
+  late TireLocation locationOnVehicle;
+
+  List<byte>? sensorBtAddress;
   String? sensorSerial;
   String? sensorVendorName;
   String? sensorProductName;
@@ -35,32 +33,4 @@ class DbTire {
   double? criticalAtTirePressureKPa;
   double? warnAtTemperatureCelcius;
   double? criticalAtTemperatureCelcius;
-}
-
-class TireLocationConverter extends TypeConverter<TireLocation?, int?> {
-  const TireLocationConverter();
-
-  @override
-  TireLocation? fromIsar(int? object) {
-    return object != null ? TireLocation.values[object] : null;
-  }
-
-  @override
-  int? toIsar(TireLocation? object) {
-    return object?.index;
-  }
-}
-
-class UuidConverter extends TypeConverter<UuidValue, String> {
-  const UuidConverter();
-
-  @override
-  UuidValue fromIsar(String object) {
-    return UuidValue(object);
-  }
-
-  @override
-  String toIsar(UuidValue object) {
-    return object.uuid;
-  }
 }

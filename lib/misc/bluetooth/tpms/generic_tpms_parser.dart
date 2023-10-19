@@ -13,7 +13,7 @@ import 'package:uuid/uuid.dart';
 // Supports TPMS that's currently supported by com.po.tyrecheck2020.new
 class GenericTpmsParser extends TpmsMessageParser {
   @override
-  IList<UuidValue> get bleServiceIds => [UuidValue('0000fbb0-0000-1000-8000-00805f9b34fb')].lock;
+  IList<UuidValue> get bleServiceIds => const IListConst([UuidValue('0000fbb0-0000-1000-8000-00805f9b34fb')]);
 
   const GenericTpmsParser();
 

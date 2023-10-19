@@ -9,10 +9,10 @@ class LedIndicator extends StatelessWidget {
   final double? size;
 
   const LedIndicator({
-    Key? key,
+    super.key,
     required this.color,
     this.size,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

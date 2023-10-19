@@ -20,12 +20,12 @@ class TireInfo extends StatelessWidget {
   final VoidCallback switchToAutoSensorSelection;
 
   const TireInfo({
-    Key? key,
+    super.key,
     required this.tire,
     required this.ignoreTireLayout,
     required this.switchToManualSensorSelection,
     required this.switchToAutoSensorSelection,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class TireInfo extends StatelessWidget {
             const SizedBox(height: 20),
             Text('home.vehicle_card.finding_sensor'.tr(), textAlign: TextAlign.center),
             const SizedBox(height: 20),
-            TextButton(
+            HyperlinkButton(
               onPressed: switchToManualSensorSelection,
               child: Text('home.vehicle_card.select_manually_instead'.tr(), textAlign: TextAlign.center),
             ),
@@ -50,12 +50,12 @@ class TireInfo extends StatelessWidget {
       return DottedBorder(
         child: Column(
           children: [
-            TextButton(
+            HyperlinkButton(
               onPressed: switchToManualSensorSelection,
               child: Text('home.vehicle_card.select_sensor'.tr()),
             ),
             const SizedBox(height: 20),
-            TextButton(
+            HyperlinkButton(
               onPressed: switchToAutoSensorSelection,
               child: Text('home.vehicle_card.auto_find_sensor'.tr(), textAlign: TextAlign.center),
             ),

@@ -8,13 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:system_theme/system_theme.dart';
 import 'package:universal_tpms_reader/blocs/_all.dart';
 import 'package:universal_tpms_reader/components/_all.dart';
 import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:universal_tpms_reader/pages/_all.dart';
-
-final bool _systemUsesDarkMode = SystemTheme.isDarkMode;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,21 +26,25 @@ Future<void> main() async {
   // AppBlocInitializationAwaiter: show spinner while BLoCs are still initializing
   // AppEasyLocalization: initialize l10n
   runApp(
-    FluentTheme(
-      data: _systemUsesDarkMode ? ThemeData.dark() : ThemeData.light(),
-      child: const AppBlocProviderAndInitializer(
-        child: AppBlocInitializationAwaiter(
-          child: AppEasyLocalization(
-            child: App(),
+    Builder(
+      builder: (context) {
+        return FluentTheme(
+          data: MediaQuery.platformBrightnessOf(context).isDark ? FluentThemeData.dark() : FluentThemeData.light(),
+          child: const AppBlocProviderAndInitializer(
+            child: AppBlocInitializationAwaiter(
+              child: AppEasyLocalization(
+                child: App(),
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     ),
   );
 }
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class App extends StatelessWidget {
         return BlocBuilder<SettingsBloc, SettingsState>(
           builder: (context, settingsState) => FluentApp.router(
             // TODO: this looks good on Android 11, check on 12 and older, also check on iOS/iPadOS
-            builder: (context, child) => Container(
+            builder: (context, child) => ColoredBox(
               color: FluentTheme.of(context).micaBackgroundColor,
               child: SafeArea(child: child!),
             ),
@@ -77,11 +78,11 @@ class App extends StatelessWidget {
             ),
             routeInformationParser: const RoutemasterParser(),
             color: Colors.blue,
-            theme: _getThemeData(settingsState.settings.appTheme),
+            theme: _getThemeData(context, settingsState.settings.appTheme),
             debugShowCheckedModeBanner: false,
 
             // easy_localization
-            localizationsDelegates: [...context.localizationDelegates, const TemporaryFluentLocalizationDelegate()],
+            localizationsDelegates: [...context.localizationDelegates, FluentLocalizations.delegate],
             supportedLocales: context.supportedLocales,
             locale: context.locale,
           ),
@@ -90,14 +91,14 @@ class App extends StatelessWidget {
     );
   }
 
-  ThemeData _getThemeData(AppTheme appTheme) {
+  FluentThemeData _getThemeData(BuildContext context, AppTheme appTheme) {
     switch (appTheme) {
       case AppTheme.byDevice:
-        return _systemUsesDarkMode ? ThemeData.dark() : ThemeData.light();
+        return MediaQuery.platformBrightnessOf(context).isDark ? FluentThemeData.dark() : FluentThemeData.light();
       case AppTheme.light:
-        return ThemeData.light();
+        return FluentThemeData.light();
       case AppTheme.dark:
-        return ThemeData.dark();
+        return FluentThemeData.dark();
     }
   }
 

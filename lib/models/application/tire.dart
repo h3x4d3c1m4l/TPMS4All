@@ -16,7 +16,7 @@ class Tire with _$Tire {
   const factory Tire({
     required UuidValue uuid,
   
-    required TireLocation? locationOnVehicle,
+    required TireLocation locationOnVehicle,
 
     Uint8List? sensorBtAddress,
     String? sensorSerial,

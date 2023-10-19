@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:dart_extensions/dart_extensions.dart';
@@ -51,10 +53,9 @@ class VehiclesBloc extends Bloc<VehiclesEvent, VehiclesState> {
     final dir = await getApplicationSupportDirectory();
 
     _isar = await Isar.open(
+      _isarSchemas.unlockLazy,
       name: _databaseName,
-      schemas: _isarSchemas.unlockLazy,
       directory: dir.path,
-      inspector: true,
     );
 
     emit(state.copyWith(isInitialized: true, vehicles: await _getVehiclesFromIsar()));
@@ -113,7 +114,6 @@ class VehiclesBloc extends Bloc<VehiclesEvent, VehiclesState> {
             // sensor is unknown, but we might be able to auto pair it with a tire
             (tire.sensorSerial == null &&
                 tire.sensorAutoPair &&
-                tire.locationOnVehicle != null &&
                 tire.locationOnVehicle == sensorData.suggestsLocationOnVehicle);
   }
 }

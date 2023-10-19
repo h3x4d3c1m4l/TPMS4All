@@ -13,7 +13,7 @@ part 'vehicle.freezed.dart';
 class Vehicle with _$Vehicle {
   const factory Vehicle({
     required UuidValue uuid,
-    required VehicleType? type,
+    required VehicleType type,
     required String name,
     required DateTime added,
     required Color color,

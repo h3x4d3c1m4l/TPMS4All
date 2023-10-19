@@ -8,7 +8,7 @@ import 'package:universal_tpms_reader/blocs/_all.dart';
 class AppBlocInitializationAwaiter extends StatelessWidget {
   final Widget child;
 
-  const AppBlocInitializationAwaiter({Key? key, required this.child}) : super(key: key);
+  const AppBlocInitializationAwaiter({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class AppBlocInitializationAwaiter extends StatelessWidget {
                   duration: const Duration(milliseconds: 250),
                   child: settingsIsInitialized && vehiclesBlocIsInitialized && bluetoothIsInitialized
                       ? child
-                      : Container(
+                      : ColoredBox(
                           color: FluentTheme.of(context).brightness == Brightness.dark ? Colors.black : Colors.white,
                           child: const Center(
                             child: RepaintBoundary(

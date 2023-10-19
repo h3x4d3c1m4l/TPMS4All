@@ -85,7 +85,7 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
     PermissionStatus location, bluetooth;
 
     final AndroidDeviceInfo deviceInfo = GetIt.I.get<BaseDeviceInfo>() as AndroidDeviceInfo;
-    if (deviceInfo.version.sdkInt! < 31) {
+    if (deviceInfo.version.sdkInt < 31) {
       // <= Android 11
       location = await Permission.locationWhenInUse.request();
       bluetooth = await Permission.bluetooth.request();

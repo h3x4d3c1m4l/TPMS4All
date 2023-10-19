@@ -7,7 +7,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 class WelcomeStep extends StatelessWidget {
   final VoidCallback onNext;
 
-  const WelcomeStep({Key? key, required this.onNext}) : super(key: key);
+  const WelcomeStep({super.key, required this.onNext});
 
   @override
   Widget build(BuildContext context) {

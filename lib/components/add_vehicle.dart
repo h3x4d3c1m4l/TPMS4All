@@ -12,7 +12,7 @@ import 'package:universal_tpms_reader/models/application/_all.dart';
 import 'package:uuid/uuid.dart';
 
 class AddVehicle extends StatefulWidget {
-  const AddVehicle({Key? key}) : super(key: key);
+  const AddVehicle({super.key});
 
   @override
   _AddVehicleState createState() => _AddVehicleState();
@@ -58,7 +58,7 @@ class _AddVehicleState extends State<AddVehicle> {
                     // vehicle type
                     Text('home.add_vehicle.type'.tr()),
                     const SizedBox(height: 10),
-                    Combobox<VehicleType>(
+                    ComboBox<VehicleType>(
                       isExpanded: true,
                       items: getTirePressureUnitOptions(),
                       value: _selectedVehicleType,
@@ -69,7 +69,7 @@ class _AddVehicleState extends State<AddVehicle> {
 
                     // add button
                     const SizedBox(height: 20),
-                    TextButton(
+                    HyperlinkButton(
                       onPressed: saveVehicle,
                       child: Text('home.add_vehicle.add'.tr()),
                     ),
@@ -83,10 +83,10 @@ class _AddVehicleState extends State<AddVehicle> {
     );
   }
 
-  static List<ComboboxItem<VehicleType>> getTirePressureUnitOptions() {
-    return <ComboboxItem<VehicleType>>[
-      ComboboxItem<VehicleType>(value: VehicleType.car, child: Text('home.add_vehicle.type_option_car'.tr())),
-      ComboboxItem<VehicleType>(
+  static List<ComboBoxItem<VehicleType>> getTirePressureUnitOptions() {
+    return <ComboBoxItem<VehicleType>>[
+      ComboBoxItem<VehicleType>(value: VehicleType.car, child: Text('home.add_vehicle.type_option_car'.tr())),
+      ComboBoxItem<VehicleType>(
           value: VehicleType.motorcycle,
           child: Text('home.add_vehicle.type_option_motorcycle'.tr())),
       //ComboboxItem<VehicleType>(child: Text('bar'), value: VehicleType.other), // TODO

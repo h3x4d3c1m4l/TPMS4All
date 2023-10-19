@@ -31,6 +31,7 @@ enum AppTheme {
 enum VehicleType {
   car,
   motorcycle,
+  tricycle,
 }
 
 enum TireLocation {

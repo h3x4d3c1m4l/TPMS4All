@@ -5,4 +5,3 @@ export 'app_bloc_initialization_awaiter.dart';
 export 'app_bloc_provider_and_initializer.dart';
 export 'app_easy_localization.dart';
 export 'fluent_page.dart';
-export 'temporary_fluent_localization_delegate.dart';

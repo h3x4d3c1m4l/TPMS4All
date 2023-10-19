@@ -8,7 +8,7 @@ import 'package:universal_tpms_reader/blocs/_all.dart';
 class AppBlocProviderAndInitializer extends StatelessWidget {
   final Widget child;
 
-  const AppBlocProviderAndInitializer({Key? key, required this.child}) : super(key: key);
+  const AppBlocProviderAndInitializer({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

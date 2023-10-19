@@ -12,7 +12,7 @@ import 'package:universal_tpms_reader/models/application/_enums.dart';
 import 'package:universal_tpms_reader/models/application/settings.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -45,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
                       subtitle: 'settings.settings.language.subtitle'.tr(),
                       child: SizedBox(
                         width: 125,
-                        child: Combobox<String?>(
+                        child: ComboBox<String?>(
                           placeholder: Text('settings.settings.language.options.default'.tr()),
                           isExpanded: true,
                           items: getLanguageOptions(),
@@ -66,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
                       subtitle: 'settings.settings.tire_pressure_unit.subtitle'.tr(),
                       child: SizedBox(
                         width: 100,
-                        child: Combobox<TirePressureUnit>(
+                        child: ComboBox<TirePressureUnit>(
                           isExpanded: true,
                           items: getTirePressureUnitOptions(),
                           value: settings.tirePressureUnit,
@@ -88,7 +88,7 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
                       subtitle: 'settings.settings.temperature_unit.subtitle'.tr(),
                       child: SizedBox(
                         width: 100,
-                        child: Combobox<TemperatureUnit>(
+                        child: ComboBox<TemperatureUnit>(
                           isExpanded: true,
                           items: getTemperatureUnitOptions(),
                           value: settings.temperatureUnit,
@@ -110,7 +110,7 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
                       subtitle: 'settings.settings.theme.subtitle'.tr(),
                       child: SizedBox(
                         width: 100,
-                        child: Combobox<AppTheme>(
+                        child: ComboBox<AppTheme>(
                           isExpanded: true,
                           items: SetLanguageAndThemeMixin.getAppThemeOptions(),
                           value: settings.appTheme,
@@ -133,19 +133,19 @@ class _SettingsPageState extends State<SettingsPage> with SetLanguageAndThemeMix
     );
   }
 
-  static List<ComboboxItem<TirePressureUnit>> getTirePressureUnitOptions() {
-    return const <ComboboxItem<TirePressureUnit>>[
-      ComboboxItem<TirePressureUnit>(value: TirePressureUnit.psi, child: Text('psi')),
-      ComboboxItem<TirePressureUnit>(value: TirePressureUnit.atm, child: Text('atm')),
-      ComboboxItem<TirePressureUnit>(value: TirePressureUnit.bar, child: Text('bar')),
-      ComboboxItem<TirePressureUnit>(value: TirePressureUnit.kpa, child: Text('kPa')),
+  static List<ComboBoxItem<TirePressureUnit>> getTirePressureUnitOptions() {
+    return const <ComboBoxItem<TirePressureUnit>>[
+      ComboBoxItem<TirePressureUnit>(value: TirePressureUnit.psi, child: Text('psi')),
+      ComboBoxItem<TirePressureUnit>(value: TirePressureUnit.atm, child: Text('atm')),
+      ComboBoxItem<TirePressureUnit>(value: TirePressureUnit.bar, child: Text('bar')),
+      ComboBoxItem<TirePressureUnit>(value: TirePressureUnit.kpa, child: Text('kPa')),
     ].lock.unlockView;
   }
 
-  static List<ComboboxItem<TemperatureUnit>> getTemperatureUnitOptions() {
-    return const <ComboboxItem<TemperatureUnit>>[
-      ComboboxItem<TemperatureUnit>(value: TemperatureUnit.celcius, child: Text('°C')),
-      ComboboxItem<TemperatureUnit>(value: TemperatureUnit.fahrenheit, child: Text('°F')),
+  static List<ComboBoxItem<TemperatureUnit>> getTemperatureUnitOptions() {
+    return const <ComboBoxItem<TemperatureUnit>>[
+      ComboBoxItem<TemperatureUnit>(value: TemperatureUnit.celcius, child: Text('°C')),
+      ComboBoxItem<TemperatureUnit>(value: TemperatureUnit.fahrenheit, child: Text('°F')),
     ].lock.unlockView;
   }
 }
